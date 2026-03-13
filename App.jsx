@@ -976,13 +976,9 @@ export default function NEETTutor() {
   // ── AI question generation ──
   async function generateAI(subject, chapter, count) {
     const topic = chapter || `all chapters of ${subject}`;
-    const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY || "";
     const resp = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...(apiKey ? { "x-api-key": apiKey } : {})
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         model: "claude-sonnet-4-20250514",
         max_tokens: 4096,
@@ -1041,8 +1037,18 @@ Important rules:
     } else {
       pool = (ALL_LOCAL[subject] || []).map(q => ({ ...q, subject }));
       if (chapter) {
-        const f = pool.filter(q => q.ch === chapter);
-        pool = f.length > 0 ? f : pool;
+        // Try exact match first, then partial match (case-insensitive)
+        const exact   = pool.filter(q => q.ch === chapter);
+        const partial = pool.filter(q => q.ch?.toLowerCase().includes(chapter.toLowerCase()) || chapter.toLowerCase().includes(q.ch?.toLowerCase()));
+        // Use exact if found, else partial, else full subject pool
+        const filtered = exact.length > 0 ? exact : partial.length > 0 ? partial : pool;
+        // If filtered is less than count, mix in rest of subject pool too
+        if (filtered.length < count) {
+          const rest = pool.filter(q => !filtered.includes(q));
+          pool = [...filtered, ...rest];
+        } else {
+          pool = filtered;
+        }
       }
     }
     return shuffle(pool).slice(0, count);
@@ -1059,22 +1065,44 @@ Important rules:
     if (testMode === "full") {
       for (const [sub, count] of [["Physics",15],["Chemistry",15],["Biology",15]]) {
         setLmsg(`Generating ${sub} questions from 25-year PYQ bank...`);
-        try { qs.push(...await generateAI(sub, null, count)); } catch {}
+        try {
+          const aiQs = await generateAI(sub, null, count);
+          if (Array.isArray(aiQs) && aiQs.length >= 3) qs.push(...aiQs);
+        } catch {}
       }
-      qs = shuffle([...qs, ...getLocal(null, null, total - qs.length)]);
+      // Always pad with local to reach total
+      const localPad = getLocal(null, null, total);
+      qs = shuffle([...qs, ...localPad]).slice(0, total);
     } else {
       setLmsg(`Generating ${total} questions for ${selCh || selSub} from PYQ bank...`);
       try {
-        qs = await generateAI(selSub, selCh || null, total);
-        if (qs.length < total) qs = shuffle([...qs, ...getLocal(selSub, selCh, total - qs.length)]);
+        const aiQs = await generateAI(selSub, selCh || null, total);
+        // Only use AI result if it returned a meaningful number of questions
+        if (Array.isArray(aiQs) && aiQs.length >= Math.min(3, total)) {
+          qs = aiQs;
+        } else {
+          throw new Error("too few questions from AI");
+        }
       } catch {
         setLmsg("Loading from curated PYQ bank...");
-        qs = getLocal(selSub, selCh, total);
-        if (qs.length === 0) qs = getLocal(selSub, null, total);
-        if (qs.length === 0) qs = getLocal(null, null, total);
+      }
+      // Always pad with local questions to fill up to total
+      if (qs.length < total) {
+        // Try chapter-specific first, then subject, then all
+        const chapterLocal  = getLocal(selSub, selCh, total);
+        const subjectLocal  = getLocal(selSub, null, total);
+        const allLocal      = getLocal(null, null, total);
+        const localPool = shuffle([...chapterLocal, ...subjectLocal, ...allLocal]);
+        // Deduplicate by question text
+        const seen = new Set(qs.map(q => q.q));
+        for (const q of localPool) {
+          if (!seen.has(q.q)) { seen.add(q.q); qs.push(q); }
+          if (qs.length >= total) break;
+        }
       }
     }
 
+    // Final safety net — should never be empty
     if (qs.length === 0) qs = getLocal(null, null, Math.min(total, 20));
 
     setQuestions(qs.slice(0, total));
