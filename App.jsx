@@ -975,42 +975,48 @@ export default function NEETTutor() {
 
   // ── AI question generation ──
   async function generateAI(subject, chapter, count) {
-    const topic = chapter || `all chapters of ${subject}`;
+    const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY || "";
     const resp = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(apiKey ? { "x-api-key": apiKey } : {})
+      },
       body: JSON.stringify({
         model: "claude-sonnet-4-20250514",
         max_tokens: 4096,
         messages: [{
           role: "user",
-          content: `You are an expert NEET/AIPMT exam question generator with knowledge of all NEET PYQs from 1999 to 2025.
+          content: `You are a NEET/AIPMT MCQ generator. Follow ALL rules strictly without exception.
 
-Generate exactly ${count} high-quality MCQ questions about "${topic}" for NEET ${subject}.
+SUBJECT: ${subject}
+${chapter ? `CHAPTER: ${chapter}` : `SCOPE: All chapters of ${subject}`}
+TOTAL QUESTIONS NEEDED: ${count}
 
-Include questions inspired by: NEET PYQs (1999-2025), NCERT Exemplar, Allen/Aakash coaching modules, Physics Wallah (PW) study material.
+STRICT RULES — NEVER BREAK THESE:
+1. SUBJECT RULE: Every question MUST be from ${subject} only. Never include questions from other subjects.
+2. ${chapter ? `CHAPTER RULE: Every question MUST be strictly about "${chapter}" only. Do NOT include any question from a different chapter.` : `VARIETY RULE: Cover different chapters across ${subject}.`}
+3. OUTPUT RULE: Return ONLY a raw JSON array. No markdown, no backticks, no extra text.
+4. INDEX RULE: "ans" is 0-based index of correct option (0, 1, 2, or 3).
+5. DIFFICULTY RULE: "diff" must be exactly: Easy, Medium, or Hard.
+6. SOURCE RULE: "src" must be from: NEET 2025, NEET 2024, NEET 2023, NEET 2022, NEET 2021, NEET 2020, NEET 2019, NEET 2018, AIPMT 2015, AIPMT 2014, NCERT Exemplar, Allen Module, Aakash Module, Physics Wallah.
+7. QUALITY RULE: All 4 options must be scientifically plausible — no obviously wrong answers.
+8. EXPLANATION RULE: "exp" must clearly explain why the correct answer is right with concept/formula.
+9. NO REPEAT RULE: Do not repeat the same concept in two questions.
+10. COUNT RULE: Generate exactly ${count} questions — not more, not less.
 
-Return ONLY a valid JSON array with no markdown formatting, no backticks, no explanation:
+Return this exact JSON structure:
 [
   {
-    "q": "Full question text here",
+    "q": "Question text ending with ?",
     "opts": ["Option A", "Option B", "Option C", "Option D"],
     "ans": 0,
     "src": "NEET 2022",
     "diff": "Medium",
-    "exp": "Clear explanation of why the correct answer is right",
-    "ch": "${chapter || topic}"
+    "exp": "Explanation of correct answer.",
+    "ch": "${chapter || subject}"
   }
-]
-
-Important rules:
-- "ans" is the 0-based index of the correct option (0, 1, 2, or 3)
-- "diff" must be exactly one of: Easy, Medium, Hard
-- "src" should be specific like: NEET 2023, NEET 2021, AIPMT 2015, NCERT Exemplar, Allen Module, Aakash Module, Physics Wallah
-- Aim for 30% Easy, 50% Medium, 20% Hard
-- All 4 options must be scientifically plausible
-- Questions must test conceptual understanding
-- Do not repeat the same concept twice`
+]`
         }]
       })
     });
@@ -1022,7 +1028,7 @@ Important rules:
       q: String(q.q || ""),
       opts: Array.isArray(q.opts) ? q.opts.map(String) : ["A","B","C","D"],
       ans: Number(q.ans) || 0,
-      ch: String(q.ch || chapter || subject),
+      ch: String(chapter || q.ch || subject),
       src: String(q.src || "NCERT Exemplar"),
       diff: ["Easy","Medium","Hard"].includes(q.diff) ? q.diff : "Medium",
       exp: String(q.exp || "Refer NCERT for explanation."),
