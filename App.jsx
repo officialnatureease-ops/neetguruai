@@ -1677,9 +1677,14 @@ Return ONLY a JSON object (no markdown, no backticks):
     let qs = [];
 
     if (testMode === "full") {
-      // NEET pattern: 60 Physics + 60 Chemistry + 60 Biology = 180, in fixed order
-      for (const sub of ["Physics", "Chemistry", "Biology"]) {
-        setLmsg(`Loading ${sub} questions (Section ${sub === "Physics" ? "A" : sub === "Chemistry" ? "B" : "C"})...`);
+      // ✅ REAL NEET PATTERN: Physics=45, Chemistry=45, Biology=90 (Botany 45 + Zoology 45) = 180
+      const sectionConfig = [
+        { sub: "Physics",   count: 45, label: "Section A — Physics"   },
+        { sub: "Chemistry", count: 45, label: "Section B — Chemistry" },
+        { sub: "Biology",   count: 90, label: "Section C — Biology (Botany + Zoology)" },
+      ];
+      for (const { sub, count, label } of sectionConfig) {
+        setLmsg(`Loading ${label}...`);
         const subSeen = new Set();
         const subQs = [];
         const addSub = (list) => {
@@ -1687,26 +1692,15 @@ Return ONLY a JSON object (no markdown, no backticks):
             if (q.q && !subSeen.has(q.q)) { subSeen.add(q.q); subQs.push({...q, subject: sub}); }
           }
         };
-        // a) cached questions
-        addSub(getCached(sub, null, 60));
-        // b) local bank
-        addSub(getLocal(sub, null, 60));
-        // c) AI + web search
-        if (subQs.length < 60) {
-          try {
-            const aiQs = await generateAI(sub, null, 60);
-            addSub(aiQs);
-          } catch {}
+        addSub(getCached(sub, null, count));
+        addSub(getLocal(sub, null, count));
+        if (subQs.length < count) {
+          try { addSub(await generateAI(sub, null, count)); } catch {}
         }
-        // d) second AI pass
-        if (subQs.length < 45) {
-          try {
-            const more = await generateAI(sub, null, 60);
-            addSub(more);
-          } catch {}
+        if (subQs.length < count) {
+          try { addSub(await generateAI(sub, null, count)); } catch {}
         }
-        // push exactly 60 (or however many we got) in order
-        qs.push(...subQs.slice(0, 60));
+        qs.push(...subQs.slice(0, count));
       }
     } else {
       // ── Subject-wise or Chapter-wise test ──
@@ -2002,7 +1996,7 @@ Return ONLY a JSON object (no markdown, no backticks):
 
         <div className="stats-grid">
           <div className="stat-card"><div className="stat-num">27</div><div className="stat-lbl">Years of PYQs (1999–2025)</div></div>
-          <div className="stat-card"><div className="stat-num">3</div><div className="stat-lbl">Test Modes</div></div>
+          <div className="stat-card"><div className="stat-num">45+45+90</div><div className="stat-lbl">Physics · Chem · Bio</div></div>
           <div className="stat-card"><div className="stat-num">+4/−1</div><div className="stat-lbl">NEET Marking Scheme</div></div>
         </div>
 
@@ -2355,43 +2349,48 @@ Return ONLY a JSON object (no markdown, no backticks):
 
             {/* NEET Section Tabs — Full Mock only */}
             {testMode === "full" && (() => {
+              // ✅ Real NEET: Physics 0-44, Chemistry 45-89, Biology 90-179
               const secs = [
-                { label:"Physics",   cls:"phy", icon:"⚛️",  start:0,   end:59  },
-                { label:"Chemistry", cls:"che", icon:"🧪",  start:60,  end:119 },
-                { label:"Biology",   cls:"bio", icon:"🌿",  start:120, end:179 },
+                { label:"Physics",   cls:"phy", icon:"⚛️",  start:0,  end:44,  total:45 },
+                { label:"Chemistry", cls:"che", icon:"🧪",  start:45, end:89,  total:45 },
+                { label:"Biology",   cls:"bio", icon:"🌿",  start:90, end:179, total:90 },
               ];
               return (
                 <div style={{marginBottom:"16px"}}>
                   <div className="section-tabs">
                     {secs.map((s, idx) => {
                       const secAnswered = Object.keys(answers).filter(k => +k >= s.start && +k <= s.end).length;
-                      const secTotal = Math.min(s.end, questions.length - 1) - s.start + 1;
                       return (
                         <button key={idx}
                           className={`sec-tab ${s.cls} ${activeSection === idx ? "active" : ""}`}
                           onClick={() => { setActiveSection(idx); setCurrent(s.start); }}>
                           {s.icon} {s.label}
-                          <span className={`sec-badge ${s.cls}`}>{secAnswered}/{secTotal > 0 ? secTotal : "..."}</span>
+                          <span className={`sec-badge ${s.cls}`}>{secAnswered}/{s.total}</span>
                         </button>
                       );
                     })}
                   </div>
-                  {/* Section progress */}
-                  <div style={{display:"flex", gap:"6px"}}>
+                  {/* Per-section progress bars */}
+                  <div style={{display:"flex", gap:"4px", marginTop:"8px"}}>
                     {secs.map((s, idx) => {
-                      const w = Math.min(s.end, questions.length-1) - s.start + 1;
                       const done = Object.keys(answers).filter(k=>+k>=s.start&&+k<=s.end).length;
-                      const pct = w > 0 ? (done/w)*100 : 0;
+                      const pct = (done / s.total) * 100;
                       const colors = ["#2563EB","#16A34A","#D97706"];
-                      return <div key={idx} style={{flex:1, height:"4px", background:"var(--border)", borderRadius:"2px", overflow:"hidden"}}>
-                        <div style={{width:`${pct}%`, height:"100%", background:colors[idx], borderRadius:"2px", transition:"width .3s"}} />
-                      </div>;
+                      const flex = [45,45,90][idx];
+                      return (
+                        <div key={idx} style={{flex:flex, height:"5px", background:"var(--border)", borderRadius:"3px", overflow:"hidden"}} title={`${s.label}: ${done}/${s.total}`}>
+                          <div style={{width:`${pct}%`, height:"100%", background:colors[idx], borderRadius:"3px", transition:"width .3s"}} />
+                        </div>
+                      );
                     })}
                   </div>
-                  <div style={{display:"flex", gap:"6px", marginTop:"4px"}}>
-                    {["Physics","Chemistry","Biology"].map((s,i) => {
+                  <div style={{display:"flex", gap:"4px", marginTop:"4px"}}>
+                    {secs.map((s,i) => {
                       const colors=["#2563EB","#16A34A","#D97706"];
-                      return <div key={i} style={{flex:1, fontSize:"10px", color:colors[i], textAlign:"center", fontWeight:"600"}}>{s}</div>
+                      const done = Object.keys(answers).filter(k=>+k>=s.start&&+k<=s.end).length;
+                      return <div key={i} style={{flex:[45,45,90][i], fontSize:"10px", color:colors[i], fontWeight:"600"}}>
+                        {s.label} ({done}/{s.total})
+                      </div>;
                     })}
                   </div>
                 </div>
@@ -2455,8 +2454,8 @@ Return ONLY a JSON object (no markdown, no backticks):
                 const prev = current - 1;
                 setCurrent(prev);
                 if (testMode === "full") {
-                  if (prev < 60) setActiveSection(0);
-                  else if (prev < 120) setActiveSection(1);
+                  if (prev < 45) setActiveSection(0);
+                  else if (prev < 90) setActiveSection(1);
                   else setActiveSection(2);
                 }
               }}>← Previous</button>
@@ -2468,8 +2467,8 @@ Return ONLY a JSON object (no markdown, no backticks):
                     const next = current + 1;
                     setCurrent(next);
                     if (testMode === "full") {
-                      if (next < 60) setActiveSection(0);
-                      else if (next < 120) setActiveSection(1);
+                      if (next < 45) setActiveSection(0);
+                      else if (next < 90) setActiveSection(1);
                       else setActiveSection(2);
                     }
                   }}>Next →</button>
@@ -2485,9 +2484,9 @@ Return ONLY a JSON object (no markdown, no backticks):
             {testMode === "full" ? (
               /* Section-wise palette for full mock */
               [
-                { label:"Physics",   cls:"phy", color:"#2563EB", start:0,   end:Math.min(59, questions.length-1)  },
-                { label:"Chemistry", cls:"che", color:"#16A34A", start:60,  end:Math.min(119, questions.length-1) },
-                { label:"Biology",   cls:"bio", color:"#D97706", start:120, end:Math.min(179, questions.length-1) },
+                { label:"Physics",   cls:"phy", color:"#2563EB", start:0,  end:Math.min(44,  questions.length-1), total:45 },
+                { label:"Chemistry", cls:"che", color:"#16A34A", start:45, end:Math.min(89,  questions.length-1), total:45 },
+                { label:"Biology",   cls:"bio", color:"#D97706", start:90, end:Math.min(179, questions.length-1), total:90 },
               ].map((sec, si) => sec.end >= sec.start && (
                 <div key={si}>
                   <div className="pal-section-head" style={{color: sec.color}}>
