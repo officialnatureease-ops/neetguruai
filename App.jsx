@@ -1172,6 +1172,64 @@ body {
 .font-semibold { font-weight: 600; }
 .w-full { width: 100%; }
 
+/* ─── NEET SECTION TABS ──────────────────── */
+.section-tabs {
+  display: flex;
+  gap: 0;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3px;
+  margin-bottom: 18px;
+  width: fit-content;
+}
+.sec-tab {
+  padding: 7px 18px;
+  border-radius: calc(var(--radius) - 2px);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--text3);
+  font-family: inherit;
+  transition: all .15s;
+  display: flex; align-items: center; gap: 6px;
+}
+.sec-tab:hover { color: var(--text); }
+.sec-tab.active { background: var(--card); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+.sec-tab.phy.active { color: #2563EB; }
+.sec-tab.che.active { color: #16A34A; }
+.sec-tab.bio.active { color: #D97706; }
+.sec-badge {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  text-align: center;
+}
+.sec-badge.phy { background: #DBEAFE; color: #1D4ED8; }
+.sec-badge.che { background: #DCFCE7; color: #15803D; }
+.sec-badge.bio { background: #FEF3C7; color: #B45309; }
+.pal-section-head {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 6px 0 4px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pal-section-head:first-child { margin-top: 0; }
+.pal-section-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 8px 0;
+}
+
 /* ─── SCANNER ───────────────────────────────── */
 .scanner-bar {
   background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%);
@@ -1344,6 +1402,7 @@ export default function NEETTutor() {
   const [lmsg, setLmsg]           = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [exitM, setExitM]         = useState(null);
+  const [activeSection, setActiveSection] = useState(0); // 0=Physics,1=Chem,2=Bio (full mock only)
 
   // Test history for profile
   const [testHistory, setTestHistory] = useState(() => {
@@ -1618,16 +1677,37 @@ Return ONLY a JSON object (no markdown, no backticks):
     let qs = [];
 
     if (testMode === "full") {
-      for (const [sub, count] of [["Physics",15],["Chemistry",15],["Biology",15]]) {
-        setLmsg(`Generating ${sub} questions from 25-year PYQ bank...`);
-        try {
-          const aiQs = await generateAI(sub, null, count);
-          if (Array.isArray(aiQs) && aiQs.length >= 3) qs.push(...aiQs);
-        } catch {}
+      // NEET pattern: 60 Physics + 60 Chemistry + 60 Biology = 180, in fixed order
+      for (const sub of ["Physics", "Chemistry", "Biology"]) {
+        setLmsg(`Loading ${sub} questions (Section ${sub === "Physics" ? "A" : sub === "Chemistry" ? "B" : "C"})...`);
+        const subSeen = new Set();
+        const subQs = [];
+        const addSub = (list) => {
+          for (const q of (list||[])) {
+            if (q.q && !subSeen.has(q.q)) { subSeen.add(q.q); subQs.push({...q, subject: sub}); }
+          }
+        };
+        // a) cached questions
+        addSub(getCached(sub, null, 60));
+        // b) local bank
+        addSub(getLocal(sub, null, 60));
+        // c) AI + web search
+        if (subQs.length < 60) {
+          try {
+            const aiQs = await generateAI(sub, null, 60);
+            addSub(aiQs);
+          } catch {}
+        }
+        // d) second AI pass
+        if (subQs.length < 45) {
+          try {
+            const more = await generateAI(sub, null, 60);
+            addSub(more);
+          } catch {}
+        }
+        // push exactly 60 (or however many we got) in order
+        qs.push(...subQs.slice(0, 60));
       }
-      // Always pad with local to reach total
-      const localPad = getLocal(null, null, total);
-      qs = shuffle([...qs, ...localPad]).slice(0, total);
     } else {
       // ── Subject-wise or Chapter-wise test ──
       const label = selCh ? `${selCh} (${selSub})` : selSub;
@@ -2257,7 +2337,9 @@ Return ONLY a JSON object (no markdown, no backticks):
           <div className="logo">NEET<span>Guru</span></div>
           <div className="flex flex-center gap-2">
             <span className="tag tag-blue" style={{ fontSize:"11px" }}>
-              {testMode === "full" ? "Full Test" : testMode === "subject" ? selSub : selCh}
+              {testMode === "full"
+                ? ["⚛️ Physics","🧪 Chemistry","🌿 Biology"][activeSection]
+                : testMode === "subject" ? selSub : selCh}
             </span>
             <span className="tag tag-gray" style={{ fontSize:"11px" }}>
               {ansMode === "instant" ? "⚡ Instant" : "🎯 Exam"}
@@ -2270,6 +2352,52 @@ Return ONLY a JSON object (no markdown, no backticks):
 
         <div className="test-layout">
           <div className="test-main">
+
+            {/* NEET Section Tabs — Full Mock only */}
+            {testMode === "full" && (() => {
+              const secs = [
+                { label:"Physics",   cls:"phy", icon:"⚛️",  start:0,   end:59  },
+                { label:"Chemistry", cls:"che", icon:"🧪",  start:60,  end:119 },
+                { label:"Biology",   cls:"bio", icon:"🌿",  start:120, end:179 },
+              ];
+              return (
+                <div style={{marginBottom:"16px"}}>
+                  <div className="section-tabs">
+                    {secs.map((s, idx) => {
+                      const secAnswered = Object.keys(answers).filter(k => +k >= s.start && +k <= s.end).length;
+                      const secTotal = Math.min(s.end, questions.length - 1) - s.start + 1;
+                      return (
+                        <button key={idx}
+                          className={`sec-tab ${s.cls} ${activeSection === idx ? "active" : ""}`}
+                          onClick={() => { setActiveSection(idx); setCurrent(s.start); }}>
+                          {s.icon} {s.label}
+                          <span className={`sec-badge ${s.cls}`}>{secAnswered}/{secTotal > 0 ? secTotal : "..."}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {/* Section progress */}
+                  <div style={{display:"flex", gap:"6px"}}>
+                    {secs.map((s, idx) => {
+                      const w = Math.min(s.end, questions.length-1) - s.start + 1;
+                      const done = Object.keys(answers).filter(k=>+k>=s.start&&+k<=s.end).length;
+                      const pct = w > 0 ? (done/w)*100 : 0;
+                      const colors = ["#2563EB","#16A34A","#D97706"];
+                      return <div key={idx} style={{flex:1, height:"4px", background:"var(--border)", borderRadius:"2px", overflow:"hidden"}}>
+                        <div style={{width:`${pct}%`, height:"100%", background:colors[idx], borderRadius:"2px", transition:"width .3s"}} />
+                      </div>;
+                    })}
+                  </div>
+                  <div style={{display:"flex", gap:"6px", marginTop:"4px"}}>
+                    {["Physics","Chemistry","Biology"].map((s,i) => {
+                      const colors=["#2563EB","#16A34A","#D97706"];
+                      return <div key={i} style={{flex:1, fontSize:"10px", color:colors[i], textAlign:"center", fontWeight:"600"}}>{s}</div>
+                    })}
+                  </div>
+                </div>
+              );
+            })()}
+
             {/* Progress */}
             <div className="prog-wrap" style={{ marginBottom:"20px" }}>
               <div className="prog-label">
@@ -2323,12 +2451,28 @@ Return ONLY a JSON object (no markdown, no backticks):
             )}
 
             <div className="test-nav">
-              <button className="btn btn-ghost" disabled={current === 0} onClick={() => setCurrent(c => c - 1)}>← Previous</button>
+              <button className="btn btn-ghost" disabled={current === 0} onClick={() => {
+                const prev = current - 1;
+                setCurrent(prev);
+                if (testMode === "full") {
+                  if (prev < 60) setActiveSection(0);
+                  else if (prev < 120) setActiveSection(1);
+                  else setActiveSection(2);
+                }
+              }}>← Previous</button>
               <button className="btn btn-outline btn-sm" onClick={toggleMark}>
                 {marked.has(current) ? "🔖 Marked" : "🔖 Mark for Review"}
               </button>
               {current < questions.length - 1
-                ? <button className="btn btn-primary" onClick={() => setCurrent(c => c + 1)}>Next →</button>
+                ? <button className="btn btn-primary" onClick={() => {
+                    const next = current + 1;
+                    setCurrent(next);
+                    if (testMode === "full") {
+                      if (next < 60) setActiveSection(0);
+                      else if (next < 120) setActiveSection(1);
+                      else setActiveSection(2);
+                    }
+                  }}>Next →</button>
                 : <button className="btn btn-danger" onClick={() => setExitM("submit")}>Submit Test</button>
               }
             </div>
@@ -2337,16 +2481,50 @@ Return ONLY a JSON object (no markdown, no backticks):
           {/* PALETTE */}
           <div className="palette-panel">
             <div className="pal-title">Question Navigator</div>
-            <div className="pal-grid">
-              {questions.map((_, i) => (
-                <div key={i}
-                  className={`pq ${i === current ? "cur" : ""} ${answers[i] !== undefined ? "ans" : ""} ${marked.has(i) ? "mk" : ""}`}
-                  onClick={() => setCurrent(i)}>
-                  {i + 1}
+
+            {testMode === "full" ? (
+              /* Section-wise palette for full mock */
+              [
+                { label:"Physics",   cls:"phy", color:"#2563EB", start:0,   end:Math.min(59, questions.length-1)  },
+                { label:"Chemistry", cls:"che", color:"#16A34A", start:60,  end:Math.min(119, questions.length-1) },
+                { label:"Biology",   cls:"bio", color:"#D97706", start:120, end:Math.min(179, questions.length-1) },
+              ].map((sec, si) => sec.end >= sec.start && (
+                <div key={si}>
+                  <div className="pal-section-head" style={{color: sec.color}}>
+                    <span>{sec.label}</span>
+                    <span style={{fontSize:"10px", color:"var(--text3)", fontWeight:"400", marginLeft:"auto"}}>
+                      {Object.keys(answers).filter(k=>+k>=sec.start&&+k<=sec.end).length}/{sec.end-sec.start+1}
+                    </span>
+                  </div>
+                  <div className="pal-grid" style={{marginBottom:"6px"}}>
+                    {Array.from({length: sec.end - sec.start + 1}, (_, ii) => {
+                      const i = sec.start + ii;
+                      return (
+                        <div key={i}
+                          className={`pq ${i === current ? "cur" : ""} ${answers[i] !== undefined ? "ans" : ""} ${marked.has(i) ? "mk" : ""}`}
+                          onClick={() => { setCurrent(i); setActiveSection(si); }}>
+                          {i + 1}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {si < 2 && <div className="pal-section-divider" />}
                 </div>
-              ))}
-            </div>
-            <div className="pal-legend">
+              ))
+            ) : (
+              /* Simple palette for subject/chapter tests */
+              <div className="pal-grid">
+                {questions.map((_, i) => (
+                  <div key={i}
+                    className={`pq ${i === current ? "cur" : ""} ${answers[i] !== undefined ? "ans" : ""} ${marked.has(i) ? "mk" : ""}`}
+                    onClick={() => setCurrent(i)}>
+                    {i + 1}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="pal-legend" style={{marginTop:"10px"}}>
               <div className="leg-row"><div className="leg-dot" style={{ background:"var(--blue)" }} /><span>Current</span></div>
               <div className="leg-row"><div className="leg-dot" style={{ background:"var(--green-lt)", border:"1px solid var(--green-bd)" }} /><span>Answered</span></div>
               <div className="leg-row"><div className="leg-dot" style={{ background:"var(--gold-lt)", border:"1px solid var(--gold-bd)" }} /><span>Marked</span></div>
