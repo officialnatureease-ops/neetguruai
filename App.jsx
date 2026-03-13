@@ -1036,6 +1036,7 @@ Return this exact JSON structure:
     }));
   }
 
+  // Returns questions strictly filtered by subject and/or chapter — NEVER mixes other chapters
   function getLocal(subject, chapter, count) {
     let pool = [];
     if (!subject) {
@@ -1043,18 +1044,14 @@ Return this exact JSON structure:
     } else {
       pool = (ALL_LOCAL[subject] || []).map(q => ({ ...q, subject }));
       if (chapter) {
-        // Try exact match first, then partial match (case-insensitive)
+        // Exact match first, then partial — but NEVER fall back to other chapters
         const exact   = pool.filter(q => q.ch === chapter);
-        const partial = pool.filter(q => q.ch?.toLowerCase().includes(chapter.toLowerCase()) || chapter.toLowerCase().includes(q.ch?.toLowerCase()));
-        // Use exact if found, else partial, else full subject pool
-        const filtered = exact.length > 0 ? exact : partial.length > 0 ? partial : pool;
-        // If filtered is less than count, mix in rest of subject pool too
-        if (filtered.length < count) {
-          const rest = pool.filter(q => !filtered.includes(q));
-          pool = [...filtered, ...rest];
-        } else {
-          pool = filtered;
-        }
+        const partial = pool.filter(q =>
+          q.ch?.toLowerCase().includes(chapter.toLowerCase()) ||
+          chapter.toLowerCase().includes(q.ch?.toLowerCase())
+        );
+        // Strict: only chapter-specific questions, no mixing of other chapters
+        pool = exact.length > 0 ? exact : partial.length > 0 ? partial : [];
       }
     }
     return shuffle(pool).slice(0, count);
@@ -1080,31 +1077,50 @@ Return this exact JSON structure:
       const localPad = getLocal(null, null, total);
       qs = shuffle([...qs, ...localPad]).slice(0, total);
     } else {
-      setLmsg(`Generating ${total} questions for ${selCh || selSub} from PYQ bank...`);
+      // ── Subject-wise or Chapter-wise test ──
+      const label = selCh ? `"${selCh}" (${selSub})` : selSub;
+      setLmsg(`Generating ${total} questions from ${label}...`);
+
+      // Step 1: Try AI generation (primary source — best quality)
       try {
         const aiQs = await generateAI(selSub, selCh || null, total);
-        // Only use AI result if it returned a meaningful number of questions
         if (Array.isArray(aiQs) && aiQs.length >= Math.min(3, total)) {
           qs = aiQs;
         } else {
-          throw new Error("too few questions from AI");
+          throw new Error("too few AI questions");
         }
       } catch {
         setLmsg("Loading from curated PYQ bank...");
       }
-      // Always pad with local questions to fill up to total
+
+      // Step 2: Pad with local bank — STRICT chapter/subject filter (no mixing!)
       if (qs.length < total) {
-        // Try chapter-specific first, then subject, then all
-        const chapterLocal  = getLocal(selSub, selCh, total);
-        const subjectLocal  = getLocal(selSub, null, total);
-        const allLocal      = getLocal(null, null, total);
-        const localPool = shuffle([...chapterLocal, ...subjectLocal, ...allLocal]);
-        // Deduplicate by question text
+        // For chapter mode: only same chapter questions
+        // For subject mode: only same subject questions
+        const strictLocal = selCh
+          ? getLocal(selSub, selCh, total)       // chapter-specific only
+          : getLocal(selSub, null, total);        // subject-wide only
+
+        // Deduplicate against AI questions already collected
         const seen = new Set(qs.map(q => q.q));
-        for (const q of localPool) {
+        for (const q of strictLocal) {
           if (!seen.has(q.q)) { seen.add(q.q); qs.push(q); }
           if (qs.length >= total) break;
         }
+      }
+
+      // Step 3: If still not enough (e.g. very obscure chapter), retry AI with relaxed count
+      if (qs.length < total && qs.length < 3) {
+        setLmsg("Retrying question generation...");
+        try {
+          const retry = await generateAI(selSub, selCh || null, total);
+          if (Array.isArray(retry) && retry.length > 0) {
+            const seen = new Set(qs.map(q => q.q));
+            for (const q of retry) {
+              if (!seen.has(q.q)) { seen.add(q.q); qs.push(q); }
+            }
+          }
+        } catch {}
       }
     }
 
