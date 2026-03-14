@@ -144,6 +144,118 @@ const PYQ_BANK = {
     {q:"NAND gate is universal because:",opts:["It is cheapest","Any logic gate can be made using only NAND","It has two inputs","It consumes less power"],ans:1,ch:"Semiconductors",src:"NEET 2023",diff:"Easy",exp:"NAND gate is universal — AND, OR, NOT and all other gates can be built from NAND alone"},
     {q:"In a p-n junction diode, the depletion region is formed by:",opts:["Majority carriers only","Minority carriers only","Recombination of electrons and holes","External voltage"],ans:2,ch:"Semiconductors",src:"Motion Institute",diff:"Medium",exp:"Depletion region forms when electrons from n-side and holes from p-side recombine near junction"},
     {q:"Which diode allows current in reverse bias?",opts:["Zener diode","LED","Photodiode","All of these"],ans:0,ch:"Semiconductors",src:"NCERT Exemplar",diff:"Medium",exp:"Zener diode is designed to operate in reverse breakdown region for voltage regulation"},
+,
+  {q:"A car from rest reaches 20 m/s in 4 s. Acceleration:",opts:["5 m/s²","10 m/s²","4 m/s²","2 m/s²"],ans:0,ch:"Motion in Straight Line",src:"Allen Module",diff:"Easy",exp:"a=(v-u)/t=(20-0)/4=5 m/s²"},
+  {q:"x=2t²+3t+1. Velocity at t=2s:",opts:["11 m/s","8 m/s","4 m/s","5 m/s"],ans:0,ch:"Motion in Straight Line",src:"Physics Wallah",diff:"Medium",exp:"v=dx/dt=4t+3. At t=2: v=11 m/s"},
+  {q:"Area under v-t graph gives:",opts:["Acceleration","Speed","Displacement","Force"],ans:2,ch:"Motion in Straight Line",src:"Motion Institute",diff:"Easy",exp:"Area under v-t graph = displacement"},
+  {q:"At highest point of projectile, acceleration is:",opts:["Zero","g upward","g downward","Depends on mass"],ans:2,ch:"Motion in Straight Line",src:"NCERT Exemplar",diff:"Easy",exp:"g always acts downward regardless of velocity"},
+  {q:"Slope of x-t graph gives:",opts:["Acceleration","Displacement","Velocity","Speed"],ans:2,ch:"Motion in Straight Line",src:"Aakash Module",diff:"Easy",exp:"Slope of x-t graph = dx/dt = velocity"},
+  {q:"Stone dropped from 80 m. Time to reach ground (g=10):",opts:["4 s","8 s","2 s","16 s"],ans:0,ch:"Motion in Straight Line",src:"Allen Module",diff:"Easy",exp:"h=½gt²→80=5t²→t=4 s"},
+  {q:"Retardation means velocity and acceleration are:",opts:["Same direction","Opposite direction","Perpendicular","Zero"],ans:1,ch:"Motion in Straight Line",src:"Physics Wallah",diff:"Easy",exp:"Retardation = deceleration; acceleration opposes motion"},
+  {q:"Two trains 400 m each approach at 72 km/h. Time to completely cross:",opts:["20 s","10 s","40 s","8 s"],ans:0,ch:"Motion in Straight Line",src:"Motion Institute",diff:"Medium",exp:"Relative speed=40 m/s. Total length=800 m. t=20 s"},
+  {q:"Relative velocity of bodies moving in same direction v₁>v₂:",opts:["v₁+v₂","v₁-v₂","v₁v₂","v₁/v₂"],ans:1,ch:"Motion in Straight Line",src:"Aakash Module",diff:"Easy",exp:"Same direction: relative v = v₁-v₂"},
+  {q:"A body at rest has non-zero:",opts:["Velocity","Acceleration","Mass","Displacement"],ans:2,ch:"Motion in Straight Line",src:"NCERT Exemplar",diff:"Easy",exp:"Mass is an intrinsic property; doesn't depend on motion"},
+  {q:"Displacement in nth second: Sₙ = u + a(2n-1)/2. For u=0, a=2, S₃=",opts:["5 m","3 m","9 m","7 m"],ans:0,ch:"Motion in Straight Line",src:"Allen Module",diff:"Medium",exp:"S₃=0+2(2×3-1)/2=2×5/2=5 m"},
+  {q:"Distance-time graph of uniformly accelerated body is:",opts:["Straight line","Parabola","Hyperbola","Circle"],ans:1,ch:"Motion in Straight Line",src:"Physics Wallah",diff:"Easy",exp:"s=ut+½at²; quadratic in t → parabola on s-t graph"},
+  {q:"A ball thrown up at 20 m/s. Max height (g=10):",opts:["20 m","40 m","10 m","200 m"],ans:0,ch:"Motion in Straight Line",src:"Aakash Module",diff:"Easy",exp:"v²=u²-2gh→0=400-20h→h=20 m"},
+  {q:"A car moving at 54 km/h brakes and stops in 5 s. Retardation:",opts:["3 m/s²","5.4 m/s²","10 m/s²","1.5 m/s²"],ans:0,ch:"Motion in Straight Line",src:"Motion Institute",diff:"Medium",exp:"u=54km/h=15m/s. a=(0-15)/5=-3 m/s² (retardation=3 m/s²)"},
+  {q:"Uniform velocity means:",opts:["Constant speed only","Constant speed + direction","Variable speed + constant direction","Increasing speed"],ans:1,ch:"Motion in Straight Line",src:"NCERT Exemplar",diff:"Easy",exp:"Velocity is a vector; uniform velocity = constant magnitude AND direction"},
+  {q:"A particle starts at x=5m and moves with v=3 m/s. Position at t=4s:",opts:["17 m","12 m","20 m","7 m"],ans:0,ch:"Motion in Straight Line",src:"Allen Module",diff:"Easy",exp:"x=x₀+vt=5+3×4=17 m"},
+  {q:"Free fall acceleration near Earth surface:",opts:["9.8 m/s downward","9.8 m/s upward","Depends on mass","Varies with speed"],ans:0,ch:"Motion in Straight Line",src:"Physics Wallah",diff:"Easy",exp:"Free fall: a=g=9.8 m/s² downward (independent of mass, air resistance neglected)"},
+  {q:"A body covers equal distances in equal time intervals. Its motion is:",opts:["Non-uniform","Uniformly accelerated","Uniform","Retarded"],ans:2,ch:"Motion in Straight Line",src:"Aakash Module",diff:"Easy",exp:"Equal distances in equal times → constant speed = uniform motion"},
+  {q:"Instantaneous velocity = average velocity when:",opts:["Acceleration is uniform","Velocity is uniform","Body at rest","None of these"],ans:1,ch:"Motion in Straight Line",src:"Motion Institute",diff:"Medium",exp:"When velocity is constant (uniform), instantaneous = average velocity"},
+  {q:"A cheetah runs 100 m in 4 s. Average speed:",opts:["25 m/s","400 m/s","10 m/s","4 m/s"],ans:0,ch:"Motion in Straight Line",src:"NCERT Exemplar",diff:"Easy",exp:"Average speed = distance/time = 100/4 = 25 m/s"},
+
+  {q:"Static friction is always __ limiting friction:",opts:["Greater than","Equal to","Less than or equal to","Independent of"],ans:2,ch:"Laws of Motion",src:"Allen Module",diff:"Easy",exp:"Static friction adjusts to applied force; ≤ limiting friction (μₛN)"},
+  {q:"Newton's 1st law is also called law of:",opts:["Acceleration","Inertia","Action-reaction","Gravitation"],ans:1,ch:"Laws of Motion",src:"NCERT Exemplar",diff:"Easy",exp:"Newton's 1st law: body continues in its state → law of inertia"},
+  {q:"A 10 kg block on frictionless surface, F=50 N applied. Acceleration:",opts:["5 m/s²","500 m/s²","0.2 m/s²","50 m/s²"],ans:0,ch:"Laws of Motion",src:"Physics Wallah",diff:"Easy",exp:"a=F/m=50/10=5 m/s²"},
+  {q:"Impulse-momentum theorem: FΔt =",opts:["mv²","Δ(mv)","ma","mv"],ans:1,ch:"Laws of Motion",src:"Aakash Module",diff:"Easy",exp:"FΔt=Δp=change in momentum (impulse-momentum theorem)"},
+  {q:"A lift decelerates downward at 3 m/s². Apparent weight of 60 kg person (g=10):",opts:["780 N","420 N","600 N","180 N"],ans:1,ch:"Laws of Motion",src:"Motion Institute",diff:"Hard",exp:"Deceleration downward = acceleration upward. N=m(g-a)=60(10-3)=420 N"},
+  {q:"Action and reaction forces act on:",opts:["Same body","Different bodies","Same point","Opposite directions on same body"],ans:1,ch:"Laws of Motion",src:"Allen Module",diff:"Easy",exp:"Newton's 3rd law: action-reaction pair acts on DIFFERENT bodies"},
+  {q:"A rocket works on principle of:",opts:["Newton's 1st law","Newton's 2nd law","Newton's 3rd law","Bernoulli's theorem"],ans:2,ch:"Laws of Motion",src:"NCERT Exemplar",diff:"Easy",exp:"Rocket: gas expelled backward (action), rocket moves forward (reaction) — Newton's 3rd law"},
+  {q:"Coefficient of kinetic friction is generally:",opts:["Greater than static","Less than static","Equal to static","Zero"],ans:1,ch:"Laws of Motion",src:"Physics Wallah",diff:"Easy",exp:"μk < μs always; it's easier to keep moving than to start moving"},
+  {q:"Centripetal acceleration = v²/r. For v=10 m/s, r=5 m:",opts:["20 m/s²","50 m/s²","2 m/s²","10 m/s²"],ans:0,ch:"Laws of Motion",src:"Aakash Module",diff:"Easy",exp:"ac=v²/r=100/5=20 m/s²"},
+  {q:"Tension at bottom of circular motion (mass m, velocity v, radius r):",opts:["mg","mv²/r","mg+mv²/r","mg-mv²/r"],ans:2,ch:"Laws of Motion",src:"Motion Institute",diff:"Medium",exp:"At bottom: T-mg=mv²/r → T=mg+mv²/r (centripetal directed upward)"},
+  {q:"Minimum speed at top of vertical circle of radius r:",opts:["√(gr)","√(2gr)","√(5gr)","gr"],ans:0,ch:"Laws of Motion",src:"Allen Module",diff:"Hard",exp:"At top: mg=mv²/r (min T=0) → vmin=√(gr)"},
+
+  {q:"Work done by friction is usually:",opts:["Positive","Negative","Zero","Variable"],ans:1,ch:"Work Energy & Power",src:"Allen Module",diff:"Easy",exp:"Kinetic friction opposes displacement → work done is negative (reduces KE)"},
+  {q:"A body of mass 2 kg has KE=100 J. Its speed:",opts:["10 m/s","50 m/s","5 m/s","100 m/s"],ans:0,ch:"Work Energy & Power",src:"NCERT Exemplar",diff:"Easy",exp:"KE=½mv²→100=½×2×v²→v²=100→v=10 m/s"},
+  {q:"Watt is unit of:",opts:["Work","Energy","Power","Force"],ans:2,ch:"Work Energy & Power",src:"Physics Wallah",diff:"Easy",exp:"1 Watt = 1 Joule/second; SI unit of power"},
+  {q:"A person carrying 10 kg suitcase walks on level floor. Work done by person on suitcase:",opts:["10×d J","Zero","Negative","Depends on speed"],ans:1,ch:"Work Energy & Power",src:"Aakash Module",diff:"Medium",exp:"Weight acts down, displacement is horizontal → W=F·d·cos90°=0"},
+  {q:"Elastic collision: both KE and momentum are:",opts:["Conserved","Not conserved","Only momentum conserved","Only KE conserved"],ans:0,ch:"Work Energy & Power",src:"Motion Institute",diff:"Easy",exp:"Elastic collision: both momentum AND kinetic energy are conserved"},
+  {q:"In inelastic collision:",opts:["Momentum not conserved","KE not conserved","Both conserved","Velocity unchanged"],ans:1,ch:"Work Energy & Power",src:"Allen Module",diff:"Easy",exp:"Inelastic: momentum conserved but KE NOT conserved (some lost to heat/sound)"},
+  {q:"1 horsepower =",opts:["746 W","1000 W","550 W","1 kW"],ans:0,ch:"Work Energy & Power",src:"NCERT Exemplar",diff:"Easy",exp:"1 HP = 746 W (British unit of power)"},
+  {q:"Power of 100 W bulb on for 10 hours. Energy consumed:",opts:["1 kWh","1 Wh","100 Wh","10 Wh"],ans:0,ch:"Work Energy & Power",src:"Physics Wallah",diff:"Easy",exp:"Energy=P×t=100W×10h=1000 Wh=1 kWh"},
+  {q:"Height from which a ball falls and bounces back to h/2. Coefficient of restitution:",opts:["0.5","0.707","0.25","1"],ans:1,ch:"Work Energy & Power",src:"Aakash Module",diff:"Hard",exp:"e=√(h'/h)=√(h/2 ÷ h)=√0.5=1/√2≈0.707"},
+
+  {q:"I=2 kg·m², ω=6 rad/s. Rotational KE:",opts:["36 J","12 J","72 J","6 J"],ans:0,ch:"Rotational Motion",src:"Allen Module",diff:"Medium",exp:"KE=½Iω²=½×2×36=36 J"},
+  {q:"Torque=I×α. I=5 kg·m², α=4 rad/s². Torque:",opts:["20 N·m","1.25 N·m","9 N·m","0.8 N·m"],ans:0,ch:"Rotational Motion",src:"NCERT Exemplar",diff:"Easy",exp:"τ=Iα=5×4=20 N·m"},
+  {q:"Hollow cylinder and solid cylinder, same M and R. On incline, which has greater acceleration?",opts:["Hollow cylinder","Solid cylinder","Both equal","Depends on angle"],ans:1,ch:"Rotational Motion",src:"Physics Wallah",diff:"Hard",exp:"Solid: I=MR²/2(ratio=1/2). Hollow: I=MR²(ratio=1). Lower ratio→higher a→solid cylinder faster"},
+  {q:"MOI of disc of mass M radius R about central axis:",opts:["MR²","MR²/2","MR²/4","2MR²"],ans:1,ch:"Rotational Motion",src:"Aakash Module",diff:"Easy",exp:"I=MR²/2 for solid disc/cylinder about central axis"},
+  {q:"Earth spinning: if radius decreases, its rotation speed:",opts:["Decreases","Increases","Same","Stops"],ans:1,ch:"Rotational Motion",src:"Motion Institute",diff:"Medium",exp:"Angular momentum L=Iω conserved. If R decreases→I decreases→ω increases"},
+  {q:"Couple consists of:",opts:["Two equal parallel forces same direction","Two equal anti-parallel forces different lines","Two unequal forces","One force and one torque"],ans:1,ch:"Rotational Motion",src:"Allen Module",diff:"Medium",exp:"Couple: two equal, opposite, non-collinear forces that produce pure rotation"},
+  {q:"Centre of gravity coincides with centre of mass when:",opts:["Body is large","Gravitational field is uniform","Body is small","Body is symmetric"],ans:1,ch:"Rotational Motion",src:"NCERT Exemplar",diff:"Medium",exp:"CG=CM when g is uniform (small bodies or uniform field)"},
+  {q:"Angular impulse = change in:",opts:["Angular velocity","Angular momentum","Torque","MOI"],ans:1,ch:"Rotational Motion",src:"Physics Wallah",diff:"Medium",exp:"Angular impulse = τ·Δt = ΔL (change in angular momentum)"},
+
+  {q:"Acceleration due to gravity on moon is about g/6. Weight of 60 kg person on moon:",opts:["100 N","60 N","360 N","10 N"],ans:0,ch:"Gravitation",src:"Allen Module",diff:"Easy",exp:"W_moon=m×g_moon=60×(10/6)=100 N"},
+  {q:"Planets move faster when:",opts:["Far from sun","Close to sun","Always constant speed","At aphelion"],ans:1,ch:"Gravitation",src:"NCERT Exemplar",diff:"Easy",exp:"Kepler's 2nd law: angular momentum conserved→closer to sun→faster orbital speed"},
+  {q:"Gravitational field is zero at:",opts:["Surface of Earth","Centre of Earth","Infinity","None"],ans:1,ch:"Gravitation",src:"Physics Wallah",diff:"Medium",exp:"At Earth's centre, symmetric forces from all directions cancel → g=0"},
+  {q:"If height h<<R, g at height h ≈",opts:["g(1+2h/R)","g(1-2h/R)","g(1-h/R)","g(1+h/R)"],ans:1,ch:"Gravitation",src:"Aakash Module",diff:"Hard",exp:"g_h=GM/(R+h)²≈g(1-2h/R) for h<<R (binomial approximation)"},
+  {q:"Which quantity is conserved in orbital motion of planet?",opts:["KE","PE","Speed","Angular momentum"],ans:3,ch:"Gravitation",src:"Motion Institute",diff:"Medium",exp:"No external torque on planet→angular momentum L=mvr is conserved"},
+
+  {q:"For adiabatic process, PVᵞ = constant. For diatomic ideal gas, γ=",opts:["5/3","7/5","4/3","3/2"],ans:1,ch:"Thermodynamics",src:"Allen Module",diff:"Medium",exp:"γ=Cp/Cv. Diatomic: f=5, Cv=5R/2, Cp=7R/2 → γ=7/5=1.4"},
+  {q:"In reversible isothermal expansion of ideal gas, dU=0 because:",opts:["No work done","T is constant→U=f(T) only","P is constant","V is constant"],ans:1,ch:"Thermodynamics",src:"NCERT Exemplar",diff:"Medium",exp:"For ideal gas, U depends only on T. Isothermal→T constant→ΔU=0"},
+  {q:"Entropy change in reversible process at temperature T: dS=",opts:["dQ/T","T/dQ","dQ×T","dQ"],ans:0,ch:"Thermodynamics",src:"Physics Wallah",diff:"Medium",exp:"dS=dQ/T (definition of entropy change for reversible process)"},
+  {q:"Zeroth law of thermodynamics defines:",opts:["Entropy","Temperature","Internal energy","Pressure"],ans:1,ch:"Thermodynamics",src:"Aakash Module",diff:"Easy",exp:"Zeroth law: if A and B are in thermal equilibrium with C, then A and B are in equilibrium → defines temperature"},
+  {q:"Work done by ideal gas in isobaric process:",opts:["PΔV","ΔU","Zero","nCvΔT"],ans:0,ch:"Thermodynamics",src:"Motion Institute",diff:"Easy",exp:"Isobaric (constant P): W=PΔV=P(V₂-V₁)"},
+
+  {q:"Average translational KE per molecule of gas = ",opts:["½kT","kT","3/2 kT","3kT"],ans:2,ch:"Kinetic Theory of Gases",src:"Allen Module",diff:"Medium",exp:"Average translational KE per molecule = 3/2 kT (3 translational degrees of freedom)"},
+  {q:"At absolute zero temperature, kinetic energy of gas is:",opts:["Maximum","Minimum (zero)","kT","1.5 kT"],ans:1,ch:"Kinetic Theory of Gases",src:"NCERT Exemplar",diff:"Easy",exp:"At T=0 K, all molecular motion ceases → KE=0"},
+  {q:"Mean free path of gas molecule increases when:",opts:["Pressure increases","Temperature decreases","Density decreases","All of above"],ans:2,ch:"Kinetic Theory of Gases",src:"Physics Wallah",diff:"Medium",exp:"Mean free path λ=1/(√2 πd²n); n=number density. Lower density→fewer collisions→larger λ"},
+  {q:"Ratio of vₘₛ:vₐᵥₘ:vₘₚ for gas molecules:",opts:["1.73:1.60:1.41","3:2:1","1:1:1","1.41:1.60:1.73"],ans:0,ch:"Kinetic Theory of Gases",src:"Aakash Module",diff:"Hard",exp:"vrms=√(3RT/M), vavg=√(8RT/πM), vmp=√(2RT/M). Ratio ≈ 1.73:1.60:1.41"},
+  {q:"Ideal gas equation PV = nRT is valid at:",opts:["High P, low T","Low P, high T","Any P and T","Only at STP"],ans:1,ch:"Kinetic Theory of Gases",src:"Motion Institute",diff:"Medium",exp:"Ideal gas behavior: molecules far apart, weak interactions → low P, high T"},
+
+  {q:"Phase difference between displacement and velocity in SHM:",opts:["0","π/4","π/2","π"],ans:2,ch:"Oscillations",src:"Allen Module",diff:"Medium",exp:"x=Asinωt, v=Aωcosωt=Aωsin(ωt+π/2); v leads x by π/2"},
+  {q:"In SHM, PE+KE at any point equals:",opts:["½kA²","½kx²","kA²","0"],ans:0,ch:"Oscillations",src:"NCERT Exemplar",diff:"Medium",exp:"Total mechanical energy E=½kA² (constant at all positions in SHM)"},
+  {q:"Resonance occurs when driving frequency equals:",opts:["Half the natural frequency","Double the natural frequency","Natural frequency","Zero"],ans:2,ch:"Oscillations",src:"Physics Wallah",diff:"Easy",exp:"Resonance: maximum amplitude when driving frequency = natural frequency of system"},
+  {q:"Time period of seconds pendulum:",opts:["1 s","2 s","0.5 s","4 s"],ans:1,ch:"Oscillations",src:"Aakash Module",diff:"Easy",exp:"Seconds pendulum: T=2 s (1 s for each half oscillation, marks each second)"},
+  {q:"If length of pendulum doubled, time period becomes:",opts:["2T","√2 T","T/√2","T/2"],ans:1,ch:"Oscillations",src:"Motion Institute",diff:"Easy",exp:"T=2π√(l/g)∝√l; l→2l → T'=√2 T"},
+
+  {q:"Velocity of wave = frequency × wavelength. For 440 Hz and λ=0.75 m, v=",opts:["330 m/s","440 m/s","0.75 m/s","587 m/s"],ans:0,ch:"Waves",src:"Allen Module",diff:"Easy",exp:"v=fλ=440×0.75=330 m/s"},
+  {q:"Sound cannot travel through:",opts:["Solid","Liquid","Gas","Vacuum"],ans:3,ch:"Waves",src:"NCERT Exemplar",diff:"Easy",exp:"Sound is mechanical wave; needs medium. Vacuum has no medium → sound cannot propagate"},
+  {q:"Frequency of 1st harmonic of closed organ pipe (length L, velocity v):",opts:["v/4L","v/2L","v/L","3v/4L"],ans:0,ch:"Waves",src:"Physics Wallah",diff:"Medium",exp:"Closed pipe fundamental: f=v/4L (one node at closed end, antinode at open)"},
+  {q:"Number of beats per second = |f₁-f₂|. If f₁=256, f₂=260, beats/s=",opts:["4","516","2","8"],ans:0,ch:"Waves",src:"Aakash Module",diff:"Easy",exp:"Beats = |260-256| = 4 per second"},
+  {q:"Transverse waves can travel in:",opts:["Gases only","Liquids only","Solids and surface of liquids","All media"],ans:2,ch:"Waves",src:"Motion Institute",diff:"Medium",exp:"Transverse waves need shear elasticity → only solids support them (and surface of liquids for water waves)"},
+
+  {q:"Critical angle for total internal reflection depends on:",opts:["Wavelength only","Refractive index only","Both wavelength and μ","Neither"],ans:2,ch:"Ray Optics",src:"Allen Module",diff:"Medium",exp:"sinC=1/μ; μ depends on wavelength (dispersion)→C depends on both"},
+  {q:"Power of convex lens of f=25 cm:",opts:["+4D","−4D","+0.04D","−0.04D"],ans:0,ch:"Ray Optics",src:"NCERT Exemplar",diff:"Easy",exp:"P=1/f(m)=1/0.25=+4D (converging/convex lens → positive)"},
+  {q:"Image formed by plane mirror is:",opts:["Real, inverted","Virtual, erect, same size","Real, erect","Virtual, inverted"],ans:1,ch:"Ray Optics",src:"Physics Wallah",diff:"Easy",exp:"Plane mirror: virtual, erect, laterally inverted, same size as object"},
+  {q:"Myopia (short-sightedness) is corrected by:",opts:["Convex lens","Concave lens","Cylindrical lens","Bifocal lens"],ans:1,ch:"Ray Optics",src:"Aakash Module",diff:"Easy",exp:"Myopia: image forms before retina. Concave (diverging) lens corrects by moving image back to retina"},
+  {q:"Angle of incidence = angle of reflection. This is:",opts:["Snell's law","Law of reflection","Brewster's law","Bragg's law"],ans:1,ch:"Ray Optics",src:"Motion Institute",diff:"Easy",exp:"Law of reflection: angle of incidence = angle of reflection (both measured from normal)"},
+
+  {q:"Coherent sources have:",opts:["Same frequency and constant phase difference","Same amplitude only","Same wavelength only","Random phase"],ans:0,ch:"Wave Optics",src:"Allen Module",diff:"Easy",exp:"Coherent sources: same frequency, constant phase relationship → stable interference pattern"},
+  {q:"Diffraction effects are significant when slit width ≈",opts:["1 m","1 cm","Wavelength of light","100 wavelengths"],ans:2,ch:"Wave Optics",src:"NCERT Exemplar",diff:"Medium",exp:"Diffraction significant when obstacle/slit size ≈ wavelength of wave"},
+  {q:"Fringe width β=λD/d. If d halved, β:",opts:["Halves","Doubles","Same","Quadruples"],ans:1,ch:"Wave Optics",src:"Physics Wallah",diff:"Easy",exp:"β∝1/d; d halved → β doubles"},
+  {q:"Polaroid works by:",opts:["Reflection","Absorption of one component","Diffraction","Scattering"],ans:1,ch:"Wave Optics",src:"Aakash Module",diff:"Medium",exp:"Polaroid contains long chain molecules that absorb one component of E-field → linearly polarised light"},
+  {q:"In thin film interference, bright fringe when path difference =",opts:["nλ","(n+½)λ","nλ/2","2nλ"],ans:0,ch:"Wave Optics",src:"Motion Institute",diff:"Medium",exp:"Constructive interference: path difference = nλ (n=0,1,2...)"},
+
+  {q:"Max KE in photoelectric effect depends on:",opts:["Intensity","Frequency","Both","Distance from source"],ans:1,ch:"Dual Nature of Matter",src:"Allen Module",diff:"Easy",exp:"KEmax=hν-φ; depends on frequency ν, NOT intensity"},
+  {q:"Work function of metal = 4 eV. Threshold frequency:",opts:["9.7×10¹⁴ Hz","4×10¹⁴ Hz","6×10¹⁵ Hz","1.6×10¹⁵ Hz"],ans:0,ch:"Dual Nature of Matter",src:"NCERT Exemplar",diff:"Medium",exp:"f₀=φ/h=4×1.6×10⁻¹⁹/6.6×10⁻³⁴≈9.7×10¹⁴ Hz"},
+  {q:"de Broglie wavelength of electron: if KE doubles, λ becomes:",opts:["λ/√2","λ/2","√2 λ","2λ"],ans:0,ch:"Dual Nature of Matter",src:"Physics Wallah",diff:"Medium",exp:"λ=h/√(2mKE)∝1/√KE; KE→2KE: λ'=λ/√2"},
+  {q:"Which confirmed wave nature of electrons experimentally?",opts:["Photoelectric effect","Compton effect","Davisson-Germer","Rutherford scattering"],ans:2,ch:"Dual Nature of Matter",src:"Aakash Module",diff:"Easy",exp:"Davisson-Germer (1927): diffraction of electrons from nickel confirmed de Broglie hypothesis"},
+  {q:"Photon energy E = hν. Momentum of photon:",opts:["hν/c","hν²","hc/ν","hν×c"],ans:0,ch:"Dual Nature of Matter",src:"Motion Institute",diff:"Medium",exp:"p=E/c=hν/c=h/λ (photon momentum despite zero rest mass)"},
+
+  {q:"Energy of nth Bohr orbit of H: Eₙ=-13.6/n² eV. E₂=",opts:["-3.4 eV","-13.6 eV","-1.51 eV","-6.8 eV"],ans:0,ch:"Atoms & Nuclei",src:"Allen Module",diff:"Easy",exp:"E₂=-13.6/4=-3.4 eV"},
+  {q:"Number of protons = atomic number Z. Number of neutrons = A-Z. ²³⁸₉₂U has neutrons:",opts:["146","92","238","330"],ans:0,ch:"Atoms & Nuclei",src:"NCERT Exemplar",diff:"Easy",exp:"Neutrons=A-Z=238-92=146"},
+  {q:"Activity of radioactive sample = λN. Unit:",opts:["Becquerel","Curie","Both A and B","Henry"],ans:2,ch:"Atoms & Nuclei",src:"Physics Wallah",diff:"Easy",exp:"Activity unit: Becquerel (SI) = 1 decay/s; Curie (older) = 3.7×10¹⁰ decays/s"},
+  {q:"Nuclear fusion releases more energy/kg than fission because:",opts:["Fusion uses heavier nuclei","Light nuclei have lower BE/nucleon→more energy released on fusion","Fusion is slower","Fission uses less material"],ans:1,ch:"Atoms & Nuclei",src:"Aakash Module",diff:"Hard",exp:"Light nuclei (H) have low BE/nucleon; fusing them gives products with much higher BE/nucleon → large energy release per kg"},
+  {q:"γ-rays are:",opts:["Electrons","Protons","High energy photons","Neutrons"],ans:2,ch:"Atoms & Nuclei",src:"Motion Institute",diff:"Easy",exp:"Gamma rays are electromagnetic radiation (high energy photons) emitted from excited nuclei"},
+
+  {q:"Conductors have __ band gap:",opts:["Large","Small","Zero (bands overlap)","Infinite"],ans:2,ch:"Semiconductors",src:"Allen Module",diff:"Easy",exp:"Conductors: conduction and valence bands overlap → no band gap → free electrons always available"},
+  {q:"At higher temperature, resistance of semiconductor:",opts:["Increases","Decreases","Stays same","Becomes zero"],ans:1,ch:"Semiconductors",src:"NCERT Exemplar",diff:"Easy",exp:"Higher T → more electron-hole pairs → more carriers → conductivity increases → resistance decreases"},
+  {q:"Full wave rectifier output frequency if input is 50 Hz:",opts:["50 Hz","100 Hz","25 Hz","200 Hz"],ans:1,ch:"Semiconductors",src:"Physics Wallah",diff:"Medium",exp:"Full wave rectifier: both half cycles used → output frequency = 2 × input = 100 Hz"},
+  {q:"In common emitter transistor, current gain β = IC/IB. If β=100, IB=20μA, IC=",opts:["2 mA","20 mA","0.2 mA","200 mA"],ans:0,ch:"Semiconductors",src:"Aakash Module",diff:"Medium",exp:"IC=β×IB=100×20μA=2000μA=2 mA"},
+  {q:"Intrinsic semiconductor at absolute zero behaves as:",opts:["Good conductor","Semiconductor","Perfect insulator","Superconductor"],ans:2,ch:"Semiconductors",src:"Motion Institute",diff:"Medium",exp:"At 0 K, all electrons in valence band, no thermal excitation→no carriers→perfect insulator"},
   ],
 
   Chemistry: [
@@ -263,6 +375,65 @@ const PYQ_BANK = {
     {q:"Nylon-6,6 is formed from:",opts:["Only adipic acid","Hexamethylenediamine + adipic acid","Formaldehyde + phenol","Caprolactam"],ans:1,ch:"Polymers",src:"NEET 2019",diff:"Easy",exp:"Nylon-6,6: condensation polymer of hexamethylenediamine + adipic acid (both have 6C)"},
     {q:"Bakelite is obtained from phenol +:",opts:["Acetaldehyde","Formaldehyde","Acetone","Chlorobenzene"],ans:1,ch:"Polymers",src:"NEET 2024",diff:"Easy",exp:"Bakelite = phenol-formaldehyde resin; thermosetting polymer"},
     {q:"Natural rubber is polymer of:",opts:["Butadiene","Isoprene","Styrene","Vinyl chloride"],ans:1,ch:"Polymers",src:"Motion Institute",diff:"Easy",exp:"Natural rubber = poly-cis-isoprene (2-methylbuta-1,3-diene polymer)"},
+,
+  {q:"Molality of solution = moles of solute per kg of:",opts:["Solution","Solvent","Both","Neither"],ans:1,ch:"Solutions",src:"Allen Module",diff:"Easy",exp:"Molality m = moles of solute / kg of SOLVENT (not solution)"},
+  {q:"Raoult's law: partial pressure of component = mole fraction × ",opts:["Total pressure","Vapour pressure of pure component","Molality","Concentration"],ans:1,ch:"Solutions",src:"NCERT Exemplar",diff:"Easy",exp:"p_A = x_A × p°_A (Raoult's law for ideal solutions)"},
+  {q:"Colligative property depends on:",opts:["Nature of solute","Number of solute particles","Size of solute","Colour of solute"],ans:1,ch:"Solutions",src:"Physics Wallah",diff:"Easy",exp:"Colligative properties depend ONLY on number of solute particles, not their nature"},
+  {q:"Osmotic pressure π = MRT. M = 0.1 mol/L, T = 300K, R=0.083. π =",opts:["2.49 atm","0.249 atm","24.9 atm","0.0249 atm"],ans:0,ch:"Solutions",src:"Aakash Module",diff:"Medium",exp:"π=MRT=0.1×0.083×300=2.49 atm"},
+  {q:"Elevation of boiling point ΔTb = Kb×m. Kb depends on:",opts:["Solute","Solvent only","Both","Temperature"],ans:1,ch:"Solutions",src:"Motion Institute",diff:"Medium",exp:"Kb (ebullioscopic constant) is property of solvent only (Kb=RT²b/1000Lv)"},
+  {q:"Henry's law: solubility of gas in liquid ∝",opts:["Temperature","Partial pressure of gas","Volume of liquid","Molar mass"],ans:1,ch:"Solutions",src:"Allen Module",diff:"Easy",exp:"Henry's law: p = KH × x; solubility increases with partial pressure of gas"},
+  {q:"Isotonic solutions have:",opts:["Same density","Same osmotic pressure","Same concentration by mass","Same temperature"],ans:1,ch:"Solutions",src:"NCERT Exemplar",diff:"Easy",exp:"Isotonic = same osmotic pressure = same molar concentration"},
+  {q:"Reverse osmosis is used in:",opts:["Blood transfusion","Water purification","Dialysis","Fermentation"],ans:1,ch:"Solutions",src:"Physics Wallah",diff:"Easy",exp:"Reverse osmosis: applied pressure > osmotic pressure forces water through semi-permeable membrane → desalination"},
+  {q:"Van't Hoff factor i for Al₂(SO₄)₃ in dilute solution:",opts:["2","3","4","5"],ans:3,ch:"Solutions",src:"Aakash Module",diff:"Medium",exp:"Al₂(SO₄)₃ → 2Al³⁺ + 3SO₄²⁻ = 5 ions total → i = 5"},
+  {q:"Azeotrope is a mixture that:",opts:["Has different boiling points","Boils at constant temperature with constant composition","Cannot be distilled","Has zero vapour pressure"],ans:1,ch:"Solutions",src:"Motion Institute",diff:"Hard",exp:"Azeotrope: liquid mixture with same composition in both liquid and vapour phase → cannot be separated by simple distillation"},
+
+  {q:"pH of 0.01 M HCl solution:",opts:["1","2","3","0.01"],ans:1,ch:"Equilibrium",src:"Allen Module",diff:"Easy",exp:"HCl fully ionised: [H⁺]=0.01=10⁻², pH=-log(10⁻²)=2"},
+  {q:"For weak acid HA, Ka expression:",opts:["[H⁺][A⁻]/[HA]","[HA]/[H⁺][A⁻]","[H⁺]/[HA]","[HA][H⁺]"],ans:0,ch:"Equilibrium",src:"NCERT Exemplar",diff:"Easy",exp:"Ka=[H⁺][A⁻]/[HA] (equilibrium constant for acid dissociation)"},
+  {q:"Buffer solution resists change in:",opts:["Temperature","Pressure","pH","Concentration"],ans:2,ch:"Equilibrium",src:"Physics Wallah",diff:"Easy",exp:"Buffer: mixture of weak acid+its salt; resists pH changes on adding acid or base"},
+  {q:"Common ion effect: adding NaCl to NaCl solution equilibrium shifts to:",opts:["Products","Reactants","No shift","Unpredictable"],ans:1,ch:"Equilibrium",src:"Aakash Module",diff:"Medium",exp:"Common ion (Cl⁻) increases, Le Chatelier → shifts to decrease Cl⁻ → backward (reactant side)"},
+  {q:"At equilibrium, Kc > 1 means:",opts:["Products favoured","Reactants favoured","Equal amounts","Reaction stops"],ans:0,ch:"Equilibrium",src:"Motion Institute",diff:"Easy",exp:"Kc=[products]/[reactants]; Kc>1 → products more at equilibrium"},
+  {q:"Solubility product Ksp of AgCl = 1.8×10⁻¹⁰. Molar solubility:",opts:["1.34×10⁻⁵ M","1.8×10⁻¹⁰ M","1.8×10⁻⁵ M","3.6×10⁻⁵ M"],ans:0,ch:"Equilibrium",src:"Allen Module",diff:"Medium",exp:"Ksp=s²→s=√(1.8×10⁻¹⁰)=1.34×10⁻⁵ M"},
+  {q:"Henderson-Hasselbalch equation: pH = pKa + log",opts:["[Acid]/[Salt]","[Salt]/[Acid]","[H⁺][A⁻]","Ka/[HA]"],ans:1,ch:"Equilibrium",src:"NCERT Exemplar",diff:"Medium",exp:"pH = pKa + log([A⁻]/[HA]) = pKa + log([salt]/[acid])"},
+  {q:"Degree of dissociation increases on:",opts:["Increasing concentration","Decreasing temperature","Dilution","Adding common ion"],ans:2,ch:"Equilibrium",src:"Physics Wallah",diff:"Medium",exp:"Dilution reduces concentration → equilibrium shifts right → more dissociation"},
+
+  {q:"Equivalent weight of H₂SO₄ in neutralization:",opts:["98","49","24.5","196"],ans:1,ch:"Redox Reactions",src:"Allen Module",diff:"Medium",exp:"Eq. wt = M/n = 98/2 = 49 (H₂SO₄ provides 2H⁺ in neutralization)"},
+  {q:"Oxidation state of S in H₂SO₄:",opts:["+4","+6","+2","+8"],ans:1,ch:"Redox Reactions",src:"NCERT Exemplar",diff:"Easy",exp:"2(+1)+S+4(-2)=0 → S=+6"},
+  {q:"Balancing redox by half-reaction method: which are balanced separately?",opts:["Oxidation and reduction","Acid and base","Reactants and products","None"],ans:0,ch:"Redox Reactions",src:"Physics Wallah",diff:"Medium",exp:"Half-reaction method: oxidation half-reaction and reduction half-reaction balanced separately"},
+  {q:"In acidic medium, MnO₄⁻ is reduced to:",opts:["MnO₂","Mn²⁺","MnO","Mn"],ans:1,ch:"Redox Reactions",src:"Aakash Module",diff:"Medium",exp:"In acidic: MnO₄⁻ + 8H⁺ + 5e⁻ → Mn²⁺ + 4H₂O (purple to colourless)"},
+  {q:"Faraday's 1st law: mass deposited ∝",opts:["Time only","Current only","Charge passed (I×t)","Voltage"],ans:2,ch:"Redox Reactions",src:"Motion Institute",diff:"Easy",exp:"m=Zit=ZQ; mass deposited proportional to total charge passed"},
+
+  {q:"Kohlrausch's law: limiting molar conductivity of electrolyte =",opts:["Sum of ionic conductivities","Product","Ratio","Difference"],ans:0,ch:"Electrochemistry",src:"Allen Module",diff:"Easy",exp:"Kohlrausch: Λ°m = ν₊λ°₊ + ν₋λ°₋ (sum of contributions of individual ions)"},
+  {q:"Standard electrode potential of SHE (Standard Hydrogen Electrode):",opts:["1.0 V","0.0 V","-1.0 V","0.5 V"],ans:1,ch:"Electrochemistry",src:"NCERT Exemplar",diff:"Easy",exp:"SHE is reference electrode with E°=0.00 V by definition"},
+  {q:"Nernst equation: E = E° - (RT/nF)lnQ. At 25°C with base 10:",opts:["E=E°-(0.0592/n)logQ","E=E°+(0.0592/n)logQ","E=E°×Q","E=E°/logQ"],ans:0,ch:"Electrochemistry",src:"Physics Wallah",diff:"Medium",exp:"Nernst equation at 25°C: E=E°-(0.0592/n)logQ"},
+  {q:"Conductance of solution increases with dilution because:",opts:["More ions formed","Interionic interactions reduce, mobility increases","Viscosity increases","Temperature increases"],ans:1,ch:"Electrochemistry",src:"Aakash Module",diff:"Medium",exp:"Dilution reduces interionic attraction→ions move more freely→higher conductance"},
+  {q:"Galvanic cell converts:",opts:["Electrical to chemical energy","Chemical to electrical energy","Heat to electrical energy","Mechanical to electrical energy"],ans:1,ch:"Electrochemistry",src:"Motion Institute",diff:"Easy",exp:"Galvanic/voltaic cell: spontaneous chemical reaction → electrical energy (battery)"},
+
+  {q:"Rate constant k has units of mol⁻¹L s⁻¹ for reaction order:",opts:["Zero","First","Second","Third"],ans:2,ch:"Chemical Kinetics",src:"Allen Module",diff:"Medium",exp:"Second order: rate=k[A]². k=rate/[A]²=(mol/Ls)/(mol/L)²=L/(mol·s)=mol⁻¹Ls⁻¹"},
+  {q:"For first order reaction, t₅₀% = t₁/₂ = 0.693/k. If k=0.01 s⁻¹, t₁/₂=",opts:["69.3 s","0.693 s","693 s","6930 s"],ans:0,ch:"Chemical Kinetics",src:"NCERT Exemplar",diff:"Easy",exp:"t₁/₂=0.693/k=0.693/0.01=69.3 s"},
+  {q:"Arrhenius equation: k=Ae^(-Ea/RT). A is called:",opts:["Activation energy","Frequency factor","Rate constant","Threshold energy"],ans:1,ch:"Chemical Kinetics",src:"Physics Wallah",diff:"Easy",exp:"A = frequency factor (pre-exponential factor); related to collision frequency"},
+  {q:"Rate of reaction doubles when temperature increases 10°C. Temperature coefficient =",opts:["1","2","0.5","10"],ans:1,ch:"Chemical Kinetics",src:"Aakash Module",diff:"Easy",exp:"Temperature coefficient (Q₁₀) = rate at (T+10)/rate at T = 2 (given)"},
+  {q:"Zero order reaction: rate = k. Unit of k:",opts:["mol L⁻¹s⁻¹","s⁻¹","L mol⁻¹s⁻¹","L²mol⁻²s⁻¹"],ans:0,ch:"Chemical Kinetics",src:"Motion Institute",diff:"Medium",exp:"Zero order: rate=k[A]⁰=k; k has same units as rate = mol L⁻¹s⁻¹"},
+
+  {q:"Transition metals show variable oxidation states because:",opts:["Large atomic radius","Variable number of d-electrons","High ionization energy","Low electronegativity"],ans:1,ch:"d & f Block Elements",src:"Allen Module",diff:"Medium",exp:"d-electrons have similar energies→different numbers can be removed→variable oxidation states"},
+  {q:"Lanthanide contraction causes:",opts:["Increasing atomic radius across lanthanides","Similar properties of Zr and Hf","Decreasing density","Increasing reactivity"],ans:1,ch:"d & f Block Elements",src:"NCERT Exemplar",diff:"Hard",exp:"Lanthanide contraction: 4f electrons poor shielding→Hf has nearly same radius as Zr→similar properties"},
+  {q:"KMnO₄ in alkaline medium is reduced to:",opts:["MnO₂","Mn²⁺","MnO₄²⁻","Mn"],ans:2,ch:"d & f Block Elements",src:"Physics Wallah",diff:"Hard",exp:"In alkaline medium: MnO₄⁻ + e⁻ → MnO₄²⁻ (manganate, green)"},
+  {q:"Which transition metal is liquid at room temperature?",opts:["Fe","Cu","Hg","Zn"],ans:2,ch:"d & f Block Elements",src:"Aakash Module",diff:"Easy",exp:"Mercury (Hg) is the only metal that is liquid at room temperature (mp=-39°C)"},
+
+  {q:"CFSE in octahedral complex depends on:",opts:["Ligand field strength only","Metal oxidation state only","Both ligand and metal","Coordination number"],ans:2,ch:"Coordination Compounds",src:"Allen Module",diff:"Medium",exp:"Crystal field stabilization energy (CFSE) depends on Δo which is affected by both ligand (spectrochemical series) and metal"},
+  {q:"Coordination number in [Co(en)₂Cl₂]⁺ (en=bidentate):",opts:["4","5","6","8"],ans:2,ch:"Coordination Compounds",src:"NCERT Exemplar",diff:"Medium",exp:"en is bidentate (2 donor atoms each). 2 en + 2 Cl = 2×2+2 = 6 donor atoms → CN=6"},
+  {q:"Isomers that differ only in orientation of groups around metal are:",opts:["Ionisation","Linkage","Geometric (cis-trans)","Optical"],ans:2,ch:"Coordination Compounds",src:"Physics Wallah",diff:"Medium",exp:"Geometric isomers: same connectivity, different spatial arrangement (cis/trans around metal centre)"},
+  {q:"Hemoglobin contains which metal ion at centre of porphyrin?",opts:["Cu²⁺","Zn²⁺","Fe²⁺","Co²⁺"],ans:2,ch:"Coordination Compounds",src:"Aakash Module",diff:"Easy",exp:"Haemoglobin: Fe²⁺ in porphyrin ring; binds O₂ reversibly for oxygen transport"},
+
+  {q:"Lucas test: which alcohol reacts instantly with ZnCl₂/conc HCl?",opts:["Primary","Secondary","Tertiary","All same"],ans:2,ch:"Alcohols & Ethers",src:"Allen Module",diff:"Easy",exp:"Lucas test: 3° reacts immediately (turbidity), 2° in 5 min, 1° needs heating"},
+  {q:"Dehydration of alcohols (elimination) gives:",opts:["Ether only","Alkene only","Both ether and alkene","Aldehyde"],ans:2,ch:"Alcohols & Ethers",src:"NCERT Exemplar",diff:"Medium",exp:"Lower T→ether, Higher T→alkene; both are elimination/substitution products"},
+  {q:"Phenol is more acidic than alcohol because:",opts:["O-H bond weaker","Phenoxide ion stabilised by resonance","Higher molecular weight","More polar solvent needed"],ans:1,ch:"Alcohols & Ethers",src:"Physics Wallah",diff:"Medium",exp:"Phenoxide: negative charge delocalised over benzene ring → more stable → phenol more acidic"},
+  {q:"Clemmensen reduction converts C=O to:",opts:["C-OH","C=C","CH₂","COOH"],ans:2,ch:"Aldehydes & Ketones",src:"Aakash Module",diff:"Medium",exp:"Clemmensen (Zn-Hg/HCl): reduces carbonyl C=O directly to CH₂ (not via alcohol)"},
+  {q:"Benzaldehyde does NOT give Fehling's test because:",opts:["No alpha hydrogen","Aromatic ring blocks","Not an aldehyde","High molecular weight"],ans:1,ch:"Aldehydes & Ketones",src:"Motion Institute",diff:"Hard",exp:"Fehling's test: aromatic aldehydes (benzaldehyde) don't reduce Fehling's solution; only aliphatic aldehydes do"},
+
+  {q:"Aspirin is:",opts:["Analgesic only","Antipyretic only","Analgesic, antipyretic, anti-inflammatory","Antibiotic"],ans:2,ch:"Polymers",src:"Allen Module",diff:"Easy",exp:"Aspirin (acetylsalicylic acid) is analgesic (pain relief), antipyretic (fever), anti-inflammatory"},
+  {q:"Nylon-6 is made from:",opts:["Caprolactam","Adipic acid+hexamethylenediamine","Glycol+terephthalic acid","Phenol+formaldehyde"],ans:0,ch:"Polymers",src:"NCERT Exemplar",diff:"Easy",exp:"Nylon-6: ring-opening polymerisation of caprolactam (vs Nylon-6,6 from two monomers)"},
+  {q:"Teflon is polymer of:",opts:["Tetrafluoroethylene","Vinyl chloride","Styrene","Propylene"],ans:0,ch:"Polymers",src:"Physics Wallah",diff:"Easy",exp:"Teflon = polytetrafluoroethylene (PTFE); monomer is CF₂=CF₂"},
+  {q:"Natural rubber is hardened by adding sulphur (vulcanisation). This forms:",opts:["Disulfide bridges","C-C bonds","Ether linkages","Ester bonds"],ans:0,ch:"Polymers",src:"Aakash Module",diff:"Medium",exp:"Vulcanisation: S bridges between polymer chains → cross-linked network → harder, more elastic rubber"},
   ],
 
   Biology: [
@@ -392,6 +563,157 @@ const PYQ_BANK = {
     {q:"Ozone hole is maximum over:",opts:["Africa","Arctic","Antarctica","India"],ans:2,ch:"Biodiversity",src:"NEET 2023",diff:"Easy",exp:"Largest ozone hole is over Antarctica, especially in spring (September-October)"},
     {q:"Ex-situ conservation means:",opts:["Conservation in natural habitat","Conservation outside natural habitat","Protection of endangered species in wild","Ban on hunting"],ans:1,ch:"Biodiversity",src:"Motion Institute",diff:"Easy",exp:"Ex-situ = outside natural habitat; includes zoos, botanical gardens, seed banks, cryopreservation"},
     {q:"Red Data Book contains list of:",opts:["Extinct species","Threatened/endangered species","Common species","Introduced species"],ans:1,ch:"Biodiversity",src:"NCERT Exemplar",diff:"Easy",exp:"Red Data Book (IUCN Red List) catalogues species threatened with extinction"},
+,
+  {q:"Which organelle has its own DNA?",opts:["Lysosome","Ribosome","Mitochondria","Golgi body"],ans:2,ch:"Cell Structure & Function",src:"Allen Module",diff:"Medium",exp:"Mitochondria (and chloroplast) have their own DNA and ribosomes → endosymbiont theory"},
+  {q:"Unit membrane model was proposed by:",opts:["Watson & Crick","Robert Hooke","Robertson","Singer & Nicolson"],ans:2,ch:"Cell Structure & Function",src:"NCERT Exemplar",diff:"Medium",exp:"Robertson proposed unit membrane model (1959); later replaced by fluid mosaic model"},
+  {q:"Fluid mosaic model of cell membrane was proposed by:",opts:["Robertson","Singer and Nicolson","Davson and Danielli","Watson and Crick"],ans:1,ch:"Cell Structure & Function",src:"Physics Wallah",diff:"Easy",exp:"Singer and Nicolson (1972) proposed fluid mosaic model: proteins embedded in phospholipid bilayer"},
+  {q:"Cell wall in fungi is made of:",opts:["Cellulose","Chitin","Peptidoglycan","Starch"],ans:1,ch:"Cell Structure & Function",src:"Aakash Module",diff:"Easy",exp:"Fungal cell wall: chitin (polymer of N-acetylglucosamine). Bacteria: peptidoglycan. Plants: cellulose"},
+  {q:"Which junction allows direct communication between adjacent cells?",opts:["Tight junction","Desmosomes","Gap junction","Plasmodesmata in plants"],ans:2,ch:"Cell Structure & Function",src:"Motion Institute",diff:"Medium",exp:"Gap junctions: channels between cells for direct ion and small molecule exchange"},
+  {q:"Osmosis is movement of water across semi-permeable membrane from:",opts:["High solute to low solute","Low solute to high solute concentration","High temperature to low","High pressure to low"],ans:1,ch:"Cell Structure & Function",src:"Allen Module",diff:"Easy",exp:"Osmosis: water moves from dilute (low solute) to concentrated (high solute) solution through semipermeable membrane"},
+  {q:"Plasmolysis in plant cell occurs when placed in:",opts:["Hypotonic solution","Hypertonic solution","Isotonic solution","Distilled water"],ans:1,ch:"Cell Structure & Function",src:"NCERT Exemplar",diff:"Easy",exp:"Hypertonic solution: cell loses water→cytoplasm shrinks away from wall → plasmolysis"},
+  {q:"Centrosome is absent in:",opts:["Animal cells","Fungal cells","Higher plant cells","Algal cells"],ans:2,ch:"Cell Structure & Function",src:"Physics Wallah",diff:"Medium",exp:"Centrosome (centrioles) absent in higher plant cells (they use other MTOCs for spindle formation)"},
+  {q:"Rough ER is rough because of:",opts:["Lipid vesicles","Ribosomes attached","Enzymes","Phospholipid bilayer"],ans:1,ch:"Cell Structure & Function",src:"Aakash Module",diff:"Easy",exp:"Rough ER: ribosomes attached to its surface give it rough appearance; site of protein synthesis"},
+  {q:"Which cellular structure contains proteolytic enzymes?",opts:["Peroxisome","Lysosome","Ribosome","Golgi body"],ans:1,ch:"Cell Structure & Function",src:"Motion Institute",diff:"Easy",exp:"Lysosomes: contain acid hydrolases (proteases, lipases, nucleases) → 'suicidal bags' of cell"},
+  {q:"Cell plate forms during:",opts:["S phase","Prophase","Telophase","Anaphase"],ans:2,ch:"Cell Structure & Function",src:"Allen Module",diff:"Medium",exp:"Cell plate (new cell wall) forms in telophase during cytokinesis in plant cells"},
+
+  {q:"SPM of meiosis I is different from mitosis because:",opts:["Chromosomes don't pair in mitosis","DNA doesn't replicate in meiosis","Sister chromatids separate in mitosis instead of homologs","None"],ans:0,ch:"Cell Division",src:"Allen Module",diff:"Hard",exp:"In meiosis I, homologous chromosomes (not sister chromatids) pair up and separate (reductional division)"},
+  {q:"Spindle fibres are made of:",opts:["Actin","Tubulin (microtubules)","Myosin","Collagen"],ans:1,ch:"Cell Division",src:"NCERT Exemplar",diff:"Easy",exp:"Spindle fibres are microtubules made of tubulin protein; pull chromosomes to poles"},
+  {q:"Synapsis occurs during:",opts:["Prophase I","Metaphase I","Prophase II","Anaphase I"],ans:0,ch:"Cell Division",src:"Physics Wallah",diff:"Medium",exp:"Synapsis (pairing of homologous chromosomes) occurs during zygotene of prophase I"},
+  {q:"DNA content in cell just before meiosis I begins (G2 phase): if normal = 2n (2C), it is:",opts:["2C","4C","1C","8C"],ans:1,ch:"Cell Division",src:"Aakash Module",diff:"Hard",exp:"After S phase (DNA replication), each chromosome has 2 chromatids → DNA doubles to 4C before meiosis I"},
+  {q:"Colchicine arrests mitosis at which stage?",opts:["Prophase","Metaphase","Anaphase","Telophase"],ans:1,ch:"Cell Division",src:"Motion Institute",diff:"Medium",exp:"Colchicine inhibits tubulin polymerization→no spindle formation→chromosomes arrested at metaphase"},
+
+  {q:"Which is NOT a reducing sugar?",opts:["Glucose","Fructose","Maltose","Sucrose"],ans:3,ch:"Biomolecules",src:"Allen Module",diff:"Medium",exp:"Sucrose: glycosidic bond involves anomeric carbons of both monomers → no free aldehyde/ketone → non-reducing"},
+  {q:"α-helix and β-pleated sheet are examples of __ protein structure:",opts:["Primary","Secondary","Tertiary","Quaternary"],ans:1,ch:"Biomolecules",src:"NCERT Exemplar",diff:"Easy",exp:"Secondary structure: α-helix (H-bonds within chain) and β-sheet (H-bonds between chains)"},
+  {q:"RNA differs from DNA in having:",opts:["Deoxyribose","Thymine","Uracil and ribose","Phosphate"],ans:2,ch:"Biomolecules",src:"Physics Wallah",diff:"Easy",exp:"RNA has ribose sugar (not deoxyribose) and uracil (not thymine); rest is same"},
+  {q:"Phospholipids are major components of:",opts:["DNA","Cell membrane","Cell wall","Chlorophyll"],ans:1,ch:"Biomolecules",src:"Aakash Module",diff:"Easy",exp:"Cell membranes are phospholipid bilayers with embedded proteins"},
+  {q:"Enzyme inhibition where inhibitor binds at site other than active site:",opts:["Competitive inhibition","Non-competitive inhibition","Substrate inhibition","Product inhibition"],ans:1,ch:"Biomolecules",src:"Motion Institute",diff:"Medium",exp:"Non-competitive (allosteric) inhibitor binds at allosteric site, changes active site shape"},
+  {q:"Km of enzyme represents:",opts:["Maximum velocity","Substrate concentration at ½ Vmax","Inhibitor constant","Activation energy"],ans:1,ch:"Biomolecules",src:"Allen Module",diff:"Medium",exp:"Michaelis constant Km = [S] when reaction rate = ½Vmax; lower Km = higher affinity"},
+  {q:"Coenzyme is:",opts:["Inorganic ion","Non-protein organic cofactor","Protein part of enzyme","Inhibitor"],ans:1,ch:"Biomolecules",src:"NCERT Exemplar",diff:"Easy",exp:"Coenzyme: non-protein organic molecule that binds loosely to enzyme (e.g., NAD⁺, FAD, CoA)"},
+
+  {q:"Cyclic photophosphorylation produces:",opts:["ATP and NADPH","Only ATP","Only NADPH","ATP, NADPH and O₂"],ans:1,ch:"Photosynthesis",src:"Allen Module",diff:"Medium",exp:"Cyclic photophosphorylation (PS I only): electron returns via cytochrome → only ATP produced; no NADPH, no O₂"},
+  {q:"CO₂ fixation in C3 plants by:",opts:["PEP carboxylase","Rubisco (RuBP carboxylase)","Phosphoglycerate kinase","ATP synthase"],ans:1,ch:"Photosynthesis",src:"NCERT Exemplar",diff:"Easy",exp:"In C3 plants, CO₂ combines with RuBP via Rubisco enzyme in Calvin cycle"},
+  {q:"The Z-scheme of photosynthesis involves:",opts:["PS I only","PS II only","Both PS I and PS II","Neither"],ans:2,ch:"Photosynthesis",src:"Physics Wallah",diff:"Medium",exp:"Z-scheme (Hill reaction): involves both PS II (P680) and PS I (P700) in non-cyclic electron transport"},
+  {q:"Photorespiration is associated with which enzyme?",opts:["Rubisco as oxygenase","PEP carboxylase","Rubisco as carboxylase","Cytochrome oxidase"],ans:0,ch:"Photosynthesis",src:"Aakash Module",diff:"Hard",exp:"Photorespiration: Rubisco acts as oxygenase (RuBP + O₂) in C3 plants at high O₂ → wasteful process"},
+  {q:"Number of ATP molecules consumed in one Calvin cycle (per CO₂ fixed):",opts:["2","3","4","6"],ans:1,ch:"Photosynthesis",src:"Motion Institute",diff:"Hard",exp:"Per CO₂: 3 ATP + 2 NADPH consumed in Calvin cycle to produce one triose phosphate"},
+
+  {q:"During aerobic respiration, pyruvate is oxidatively decarboxylated to:",opts:["Lactate","Ethanol","Acetyl CoA","Oxaloacetate"],ans:2,ch:"Respiration",src:"Allen Module",diff:"Easy",exp:"Pyruvate → Acetyl CoA + CO₂ + NADH (pyruvate dehydrogenase complex in mitochondrial matrix)"},
+  {q:"ETC (electron transport chain) is located in:",opts:["Cytoplasm","Mitochondrial matrix","Inner mitochondrial membrane","Outer membrane"],ans:2,ch:"Respiration",src:"NCERT Exemplar",diff:"Easy",exp:"ETC complexes (I,II,III,IV) embedded in inner mitochondrial membrane"},
+  {q:"ATP synthase (Complex V) synthesises ATP using:",opts:["Chemical energy directly","Proton gradient (chemiosmosis)","NADH directly","Electron flow"],ans:1,ch:"Respiration",src:"Physics Wallah",diff:"Medium",exp:"Mitchell's chemiosmosis: proton gradient across inner mitochondrial membrane drives ATP synthesis"},
+  {q:"RQ for fat oxidation is approximately:",opts:["1.0","0.7","0.9","1.3"],ans:1,ch:"Respiration",src:"Aakash Module",diff:"Medium",exp:"Fat has high H:O ratio → more O₂ needed. RQ for fat ≈ 0.7 (< 1.0 for carbohydrates)"},
+  {q:"Pasteur effect: aerobic conditions suppress:",opts:["Photosynthesis","Fermentation/anaerobic respiration","Aerobic respiration","Oxidative phosphorylation"],ans:1,ch:"Respiration",src:"Motion Institute",diff:"Hard",exp:"Pasteur effect: O₂ presence inhibits fermentation (anaerobic glycolysis); aerobic respiration is more efficient"},
+  {q:"How many NADH produced in one turn of Krebs cycle?",opts:["2","3","4","1"],ans:1,ch:"Respiration",src:"Allen Module",diff:"Medium",exp:"One Krebs cycle turn: 3 NADH + 1 FADH₂ + 1 GTP produced"},
+
+  {q:"Auxin transport is:",opts:["Bidirectional","Polar (basipetal in shoots)","Random","Acropetal only"],ans:1,ch:"Plant Growth & Development",src:"Allen Module",diff:"Medium",exp:"Auxin (IAA) shows polar basipetal transport in stems (tip → base); chemiosmotic theory"},
+  {q:"Seed dormancy can be broken by:",opts:["Gibberellins","Abscisic acid","Auxin","Cytokinin"],ans:0,ch:"Plant Growth & Development",src:"NCERT Exemplar",diff:"Easy",exp:"GA (gibberellins) promote seed germination by breaking dormancy and activating α-amylase"},
+  {q:"Which hormone promotes fruit ripening?",opts:["Auxin","Cytokinin","Ethylene","Gibberellin"],ans:2,ch:"Plant Growth & Development",src:"Physics Wallah",diff:"Easy",exp:"Ethylene (gaseous hormone): promotes fruit ripening, senescence, abscission"},
+  {q:"Bolting (premature elongation of internodes) is caused by:",opts:["ABA","Cytokinin","Gibberellin","Auxin"],ans:2,ch:"Plant Growth & Development",src:"Aakash Module",diff:"Medium",exp:"Gibberellins cause bolting: rapid elongation of stem before flowering in long-day plants"},
+  {q:"Root growth is:",opts:["Promoted by high auxin","Inhibited by high auxin","Unaffected by auxin","Promoted by all concentrations"],ans:1,ch:"Plant Growth & Development",src:"Motion Institute",diff:"Medium",exp:"Roots are highly sensitive to auxin; concentrations that promote shoot growth inhibit roots"},
+
+  {q:"Peristalsis is:",opts:["Churning of food","Wave-like muscular contractions moving food forward","Absorption of nutrients","Secretion of digestive juices"],ans:1,ch:"Digestion & Absorption",src:"Allen Module",diff:"Easy",exp:"Peristalsis: rhythmic wave-like contractions of smooth muscle in alimentary canal"},
+  {q:"Emulsification of fats is done by:",opts:["Lipase","Bile salts","Pepsin","Amylase"],ans:1,ch:"Digestion & Absorption",src:"NCERT Exemplar",diff:"Easy",exp:"Bile salts (not enzymes) emulsify fats into smaller droplets → increases surface area for lipase"},
+  {q:"Vitamin B₁₂ absorption requires:",opts:["Pepsin","Intrinsic factor","Amylase","HCl alone"],ans:1,ch:"Digestion & Absorption",src:"Physics Wallah",diff:"Hard",exp:"Intrinsic factor (secreted by parietal cells) is essential for B₁₂ absorption in ileum"},
+  {q:"Chylomicrons are formed in:",opts:["Liver","Intestinal epithelial cells","Pancreas","Blood"],ans:1,ch:"Digestion & Absorption",src:"Aakash Module",diff:"Hard",exp:"Chylomicrons: lipoproteins formed in intestinal cells for fat transport via lymph (lacteals)"},
+  {q:"Cephalic phase of gastric secretion is triggered by:",opts:["Food in stomach","Sight/smell/thought of food","Hormones","Chemical stimuli"],ans:1,ch:"Digestion & Absorption",src:"Motion Institute",diff:"Hard",exp:"Cephalic phase: before food enters stomach; sight, smell, thought triggers vagus nerve → gastric secretion"},
+
+  {q:"Surfactant lining the alveoli prevents:",opts:["Gas exchange","Alveolar collapse by reducing surface tension","Infection","Blood flow"],ans:1,ch:"Breathing & Gas Exchange",src:"Allen Module",diff:"Medium",exp:"Pulmonary surfactant (DPPC): reduces surface tension in alveoli → prevents collapse during expiration"},
+  {q:"Oxygen dissociation curve shifts right when:",opts:["pH increases","CO₂ decreases","Temperature increases (Bohr effect)","None of above"],ans:2,ch:"Breathing & Gas Exchange",src:"NCERT Exemplar",diff:"Hard",exp:"Bohr effect: increased temperature, CO₂, decreased pH → right shift of O₂ dissociation curve → more O₂ released to tissues"},
+  {q:"Residual volume is air:",opts:["Inspired in one breath","That cannot be expelled even after max expiration","In lungs at rest","Moved in normal breathing"],ans:1,ch:"Breathing & Gas Exchange",src:"Physics Wallah",diff:"Medium",exp:"Residual volume (RV) ≈ 1100-1200 mL; remains in lungs after maximum expiration; cannot be expired"},
+  {q:"Partial pressure of O₂ in alveoli is approximately:",opts:["159 mmHg","104 mmHg","40 mmHg","760 mmHg"],ans:1,ch:"Breathing & Gas Exchange",src:"Aakash Module",diff:"Hard",exp:"pO₂ in alveolar air ≈ 104 mmHg (atmospheric air pO₂=159; diluted by water vapour and CO₂)"},
+
+  {q:"Plasma proteins that maintain oncotic pressure:",opts:["Fibrinogen","Albumin","Globulins","Antibodies"],ans:1,ch:"Body Fluids & Circulation",src:"Allen Module",diff:"Medium",exp:"Albumin is the main plasma protein maintaining colloid osmotic (oncotic) pressure"},
+  {q:"SA node is called pacemaker because:",opts:["It is largest","It initiates heartbeat with highest frequency","It is in left atrium","It controls valves"],ans:1,ch:"Body Fluids & Circulation",src:"NCERT Exemplar",diff:"Easy",exp:"SA node (sinoatrial): generates impulses at 70-80/min, highest rate → sets heart rhythm → pacemaker"},
+  {q:"Cardiac output = heart rate × ",opts:["Blood pressure","Stroke volume","Pulse rate","Resistance"],ans:1,ch:"Body Fluids & Circulation",src:"Physics Wallah",diff:"Easy",exp:"Cardiac output = HR × SV; normal ≈ 72 beats/min × 70 mL = 5040 mL ≈ 5 L/min"},
+  {q:"Erythroblastosis fetalis (haemolytic disease of newborn) occurs when:",opts:["Mother Rh+, baby Rh-","Mother Rh-, baby Rh+","Both Rh+","Both Rh-"],ans:1,ch:"Body Fluids & Circulation",src:"Aakash Module",diff:"Hard",exp:"Rh- mother sensitised by first Rh+ baby → anti-Rh antibodies attack second Rh+ baby"},
+  {q:"Frank-Starling law: heart contracts more forcefully when:",opts:["Heart rate decreases","Ventricular volume increases (more filling)","Blood pressure decreases","SA node is inhibited"],ans:1,ch:"Body Fluids & Circulation",src:"Motion Institute",diff:"Hard",exp:"Starling's law: greater ventricular filling → more stretch → stronger contraction → increased stroke volume"},
+
+  {q:"Juxtaglomerular apparatus secretes:",opts:["ADH","Aldosterone","Renin","Angiotensin"],ans:2,ch:"Excretory Products",src:"Allen Module",diff:"Medium",exp:"JGA cells (granular cells) secrete renin in response to low BP → activates RAAS"},
+  {q:"Glucose is completely reabsorbed from glomerular filtrate in:",opts:["PCT","Loop of Henle","DCT","Collecting duct"],ans:0,ch:"Excretory Products",src:"NCERT Exemplar",diff:"Easy",exp:"All filtered glucose is reabsorbed in proximal convoluted tubule (PCT) via active transport"},
+  {q:"ADH (vasopressin) acts on:",opts:["PCT","Loop of Henle","DCT and collecting duct","Glomerulus"],ans:2,ch:"Excretory Products",src:"Physics Wallah",diff:"Medium",exp:"ADH increases water permeability of DCT and collecting duct → more water reabsorption → concentrated urine"},
+  {q:"Which nitrogenous waste requires maximum water for excretion?",opts:["Uric acid","Urea","Ammonia","Creatinine"],ans:2,ch:"Excretory Products",src:"Aakash Module",diff:"Medium",exp:"Ammonia is highly toxic and soluble; needs large water volumes for excretion → aquatic animals"},
+  {q:"Angiotensin II causes:",opts:["Vasodilation and decreased aldosterone","Vasoconstriction and increased aldosterone","Decreased blood pressure","Increased GFR"],ans:1,ch:"Excretory Products",src:"Motion Institute",diff:"Hard",exp:"Angiotensin II: powerful vasoconstrictor + stimulates aldosterone secretion → increased Na⁺ and water retention → increased BP"},
+
+  {q:"Sarcomere is the unit between two consecutive:",opts:["H zones","I bands","Z lines","M lines"],ans:2,ch:"Locomotion & Movement",src:"Allen Module",diff:"Medium",exp:"Sarcomere: functional unit of myofibril, bounded by two Z-lines (Z-discs)"},
+  {q:"Which ion triggers muscle contraction?",opts:["Na⁺","K⁺","Ca²⁺","Mg²⁺"],ans:2,ch:"Locomotion & Movement",src:"NCERT Exemplar",diff:"Easy",exp:"Ca²⁺ (released from SR) binds troponin C → unblocks active sites on actin → cross-bridge formation"},
+  {q:"Type I muscle fibres (slow twitch) are characterised by:",opts:["White, low myoglobin","Red, high myoglobin, aerobic","Fast fatigue","Few mitochondria"],ans:1,ch:"Locomotion & Movement",src:"Physics Wallah",diff:"Hard",exp:"Type I (slow twitch): red (high myoglobin), aerobic, fatigue-resistant, many mitochondria; for endurance"},
+  {q:"Ball and socket joint is found at:",opts:["Knee","Elbow","Hip and shoulder","Wrist"],ans:2,ch:"Locomotion & Movement",src:"Aakash Module",diff:"Easy",exp:"Ball and socket joint: maximum range of motion; found at hip (femur-acetabulum) and shoulder (humerus-glenoid)"},
+  {q:"Osteoporosis is due to:",opts:["Excess calcium","Deficiency of calcium and Vitamin D","Excess phosphorus","Deficiency of Vitamin C"],ans:1,ch:"Locomotion & Movement",src:"Motion Institute",diff:"Easy",exp:"Osteoporosis: low bone density due to Ca²⁺ and Vitamin D deficiency → brittle bones"},
+
+  {q:"Node of Ranvier in myelinated nerve allows:",opts:["Slow conduction","Saltatory conduction (faster)","Continuous conduction","Backward conduction"],ans:1,ch:"Neural Control",src:"Allen Module",diff:"Medium",exp:"Saltatory conduction: impulse jumps from node to node → much faster than continuous conduction in unmyelinated"},
+  {q:"Acetylcholine is a neurotransmitter at:",opts:["Neuromuscular junction","Adrenergic synapse","GABA synapse","Dopamine synapse"],ans:0,ch:"Neural Control",src:"NCERT Exemplar",diff:"Easy",exp:"Acetylcholine (ACh): neurotransmitter at neuromuscular junction and cholinergic synapses"},
+  {q:"Cerebellum controls:",opts:["Vision","Hearing","Balance and coordination","Language"],ans:2,ch:"Neural Control",src:"Physics Wallah",diff:"Easy",exp:"Cerebellum: coordinates voluntary movements, maintains balance, regulates muscle tone"},
+  {q:"Crossed extensor reflex is an example of:",opts:["Monosynaptic reflex","Polysynaptic reflex","Conditioned reflex","Stretch reflex"],ans:1,ch:"Neural Control",src:"Aakash Module",diff:"Hard",exp:"Crossed extensor: pain in one limb → flexion that limb + extension contralateral limb; multiple interneurons"},
+  {q:"Blood-brain barrier prevents:",opts:["O₂ from entering brain","Glucose from entering","Most large molecules and pathogens","Water from entering"],ans:2,ch:"Neural Control",src:"Motion Institute",diff:"Medium",exp:"Blood-brain barrier (tight junctions in brain capillaries): selective barrier, prevents most large molecules/pathogens"},
+
+  {q:"Feedback inhibition of hormone secretion is called:",opts:["Positive feedback","Negative feedback","Paracrine","Autocrine"],ans:1,ch:"Chemical Coordination",src:"Allen Module",diff:"Easy",exp:"Negative feedback: high hormone levels inhibit further secretion (e.g., thyroid hormone inhibits TSH)"},
+  {q:"Which hormone is steroid in nature?",opts:["Insulin","ADH","Testosterone","Oxytocin"],ans:2,ch:"Chemical Coordination",src:"NCERT Exemplar",diff:"Easy",exp:"Testosterone (sex hormone): steroid → lipid-soluble → enters cell directly → nuclear receptor"},
+  {q:"Gigantism and acromegaly are caused by excess:",opts:["TSH","Growth hormone (GH)","FSH","LH"],ans:1,ch:"Chemical Coordination",src:"Physics Wallah",diff:"Easy",exp:"Excess GH before puberty → gigantism; after puberty (bones fused) → acromegaly"},
+  {q:"Diabetes insipidus results from deficiency of:",opts:["Insulin","ADH (vasopressin)","Glucagon","Aldosterone"],ans:1,ch:"Chemical Coordination",src:"Aakash Module",diff:"Medium",exp:"ADH deficiency → kidney cannot concentrate urine → large volumes of dilute urine (insipidus)"},
+  {q:"Melatonin is secreted by:",opts:["Pituitary","Thyroid","Pineal gland","Adrenal"],ans:2,ch:"Chemical Coordination",src:"Motion Institute",diff:"Easy",exp:"Melatonin: secreted by pineal gland, regulates circadian rhythm and sleep-wake cycle"},
+
+  {q:"Self-incompatibility in plants prevents:",opts:["Pollination","Self-fertilization","Cross-pollination","Seed formation"],ans:1,ch:"Reproduction in Plants",src:"Allen Module",diff:"Medium",exp:"Self-incompatibility (SI): prevents self-fertilization by recognizing and rejecting own pollen"},
+  {q:"Parthenocarpy refers to development of fruit:",opts:["After normal fertilization","Without fertilization","From pollen only","From stem"],ans:1,ch:"Reproduction in Plants",src:"NCERT Exemplar",diff:"Easy",exp:"Parthenocarpy: fruit development without fertilization → seedless fruits (e.g., banana, seedless grapes)"},
+  {q:"Microsporogenesis occurs in:",opts:["Ovule","Anther (pollen sacs)","Stigma","Style"],ans:1,ch:"Reproduction in Plants",src:"Physics Wallah",diff:"Easy",exp:"Microsporogenesis: formation of microspores (pollen) in anther by meiosis of microspore mother cells"},
+  {q:"Polyembryony is the development of:",opts:["Multiple seeds in one fruit","More than one embryo in one seed","Embryo without fertilization","Triploid embryo"],ans:1,ch:"Reproduction in Plants",src:"Aakash Module",diff:"Medium",exp:"Polyembryony: multiple embryos in one seed (e.g., citrus, mango); common in nucellar embryony"},
+  {q:"In angiosperm, the female gametophyte is:",opts:["Ovule","Embryo sac","Nucellus","Integument"],ans:1,ch:"Reproduction in Plants",src:"Motion Institute",diff:"Medium",exp:"Female gametophyte = embryo sac (7-celled, 8-nucleate: egg, 2 synergids, 3 antipodals, 2 polar nuclei)"},
+
+  {q:"Corpus luteum secretes:",opts:["FSH","LH","Progesterone","Estrogen only"],ans:2,ch:"Reproduction in Animals",src:"Allen Module",diff:"Easy",exp:"Corpus luteum (ruptured follicle): secretes progesterone → maintains endometrium for implantation"},
+  {q:"Zona pellucida is a layer surrounding:",opts:["Ovary","Uterus","Ovum/oocyte","Embryo"],ans:2,ch:"Reproduction in Animals",src:"NCERT Exemplar",diff:"Easy",exp:"Zona pellucida: glycoprotein layer surrounding oocyte; sperm must penetrate for fertilization"},
+  {q:"Implantation occurs at which stage?",opts:["2-cell stage","8-cell stage","Blastocyst stage","Gastrula stage"],ans:2,ch:"Reproduction in Animals",src:"Physics Wallah",diff:"Medium",exp:"Blastocyst implants in endometrium around day 6-7 after fertilization"},
+  {q:"hCG (human chorionic gonadotropin) is secreted by:",opts:["Pituitary","Corpus luteum","Trophoblast/Placenta","Ovary"],ans:2,ch:"Reproduction in Animals",src:"Aakash Module",diff:"Medium",exp:"hCG secreted by trophoblast/early placenta → maintains corpus luteum → basis of pregnancy test"},
+  {q:"Spermatogonia are located in:",opts:["Epididymis","Seminiferous tubules","Vas deferens","Rete testis"],ans:1,ch:"Reproduction in Animals",src:"Motion Institute",diff:"Easy",exp:"Spermatogenesis begins in seminiferous tubules where spermatogonia undergo mitosis then meiosis"},
+
+  {q:"Mendel's law of independent assortment applies to genes on:",opts:["Same chromosome","Different chromosomes","X-chromosome only","Autosomes only"],ans:1,ch:"Genetics",src:"Allen Module",diff:"Easy",exp:"Independent assortment: genes on different (non-homologous) chromosomes assort independently"},
+  {q:"In incomplete dominance, F₂ phenotypic ratio is:",opts:["3:1","1:2:1","9:3:3:1","1:1"],ans:1,ch:"Genetics",src:"NCERT Exemplar",diff:"Medium",exp:"Incomplete dominance F₁×F₁: RR (red): Rr (pink): rr (white) = 1:2:1 (phenotype=genotype ratio)"},
+  {q:"Pleiotropy means one gene affects:",opts:["One trait","Multiple traits","Multiple genes","No traits"],ans:1,ch:"Genetics",src:"Physics Wallah",diff:"Easy",exp:"Pleiotropy: single gene controls multiple phenotypic traits (e.g., sickle cell gene affects RBCs, immunity, organs)"},
+  {q:"Linkage was discovered by:",opts:["Mendel","Morgan","Watson","Bateson and Punnett"],ans:3,ch:"Genetics",src:"Aakash Module",diff:"Medium",exp:"Bateson and Punnett discovered gene linkage in sweet pea (1906); Morgan studied linkage in Drosophila"},
+  {q:"Sex-linked character in humans: haemophilia gene is on:",opts:["Y chromosome","X chromosome","Autosome 1","Autosome 23"],ans:1,ch:"Genetics",src:"Motion Institute",diff:"Easy",exp:"Haemophilia A and B: X-linked recessive traits; gene on X chromosome → more common in males (XY)"},
+  {q:"Chi-square test is used in genetics to:",opts:["Determine mutation rate","Compare observed vs expected ratios","Measure dominance","Calculate recombination frequency"],ans:1,ch:"Genetics",src:"Allen Module",diff:"Medium",exp:"χ² test: statistical test to see if deviation from expected Mendelian ratios is due to chance"},
+
+  {q:"Okazaki fragments are formed on which strand during DNA replication?",opts:["Leading strand","Lagging strand","Both strands","Template strand"],ans:1,ch:"Molecular Basis of Inheritance",src:"Allen Module",diff:"Medium",exp:"Lagging strand: synthesized discontinuously as short Okazaki fragments (5'→3' direction away from fork)"},
+  {q:"Promoter sequence in eukaryotes typically contains:",opts:["TATA box","ATG codon","Stop codon","Poly-A tail"],ans:0,ch:"Molecular Basis of Inheritance",src:"NCERT Exemplar",diff:"Medium",exp:"Eukaryotic promoter contains TATA box (Hogness box) ≈25 bp upstream of transcription start site"},
+  {q:"Which RNA carries amino acids to ribosome?",opts:["mRNA","rRNA","tRNA","snRNA"],ans:2,ch:"Molecular Basis of Inheritance",src:"Physics Wallah",diff:"Easy",exp:"tRNA (transfer RNA): charged with amino acid, anticodon pairs with mRNA codon at ribosome"},
+  {q:"Post-translational modification includes:",opts:["Methylation of DNA","Addition of introns","Glycosylation of proteins","Capping of mRNA"],ans:2,ch:"Molecular Basis of Inheritance",src:"Aakash Module",diff:"Medium",exp:"Post-translational modifications: glycosylation, phosphorylation, acetylation etc. of completed protein"},
+  {q:"Lac operon: repressor protein is inactivated by:",opts:["Glucose","Lactose (allolactose)","cAMP","Galactose"],ans:1,ch:"Molecular Basis of Inheritance",src:"Motion Institute",diff:"Medium",exp:"Allolactose (from lactose) binds repressor → repressor detaches from operator → genes expressed"},
+
+  {q:"Homologous structures indicate:",opts:["Same function, different origin","Same origin (common ancestor), possibly different function","No evolutionary relationship","Parallel evolution"],ans:1,ch:"Evolution",src:"Allen Module",diff:"Easy",exp:"Homologous organs: same embryonic origin (divergent evolution); may have different functions"},
+  {q:"Industrial melanism in Biston betularia demonstrates:",opts:["Lamarckism","Natural selection (directional)","Genetic drift","Mutation only"],ans:1,ch:"Evolution",src:"NCERT Exemplar",diff:"Medium",exp:"Peppered moth: soot darkened trees → dark moths better camouflaged → natural selection favoured melanics"},
+  {q:"Allopatric speciation occurs due to:",opts:["Same habitat, different niches","Geographic isolation","Polyploidy","Hybridization"],ans:1,ch:"Evolution",src:"Physics Wallah",diff:"Easy",exp:"Allopatric speciation: geographic barrier separates populations → diverge independently → new species"},
+  {q:"Molecular clock concept is based on:",opts:["Fossil record","Constant rate of neutral mutations over time","Anatomical similarities","Protein function"],ans:1,ch:"Evolution",src:"Aakash Module",diff:"Hard",exp:"Molecular clock: neutral mutations accumulate at roughly constant rate → estimate divergence time between species"},
+  {q:"Stabilising selection favours:",opts:["Extreme phenotypes","Intermediate phenotypes","All phenotypes equally","Only one extreme"],ans:1,ch:"Evolution",src:"Motion Institute",diff:"Medium",exp:"Stabilising selection: intermediate phenotype has highest fitness → reduces variation, maintains status quo"},
+
+  {q:"Primary lymphoid organs where lymphocytes develop:",opts:["Spleen and lymph nodes","Thymus and bone marrow","Tonsils and MALT","Blood and thymus"],ans:1,ch:"Human Health & Disease",src:"Allen Module",diff:"Medium",exp:"Primary lymphoid organs: bone marrow (B-cell maturation) and thymus (T-cell maturation)"},
+  {q:"ELISA test detects:",opts:["DNA sequences","Antigens or antibodies","Chromosomal abnormalities","Enzyme activity"],ans:1,ch:"Human Health & Disease",src:"NCERT Exemplar",diff:"Medium",exp:"ELISA (Enzyme-Linked ImmunoSorbent Assay): detects antigens or antibodies; used for HIV, dengue diagnosis"},
+  {q:"Opium is obtained from:",opts:["Cannabis sativa","Papaver somniferum","Erythroxylum coca","Atropa belladonna"],ans:1,ch:"Human Health & Disease",src:"Physics Wallah",diff:"Easy",exp:"Opium (morphine, heroin): from latex of Papaver somniferum (opium poppy)"},
+  {q:"Active immunity is acquired by:",opts:["Receiving antibodies","Infection or vaccination","Maternal antibodies","Blood transfusion"],ans:1,ch:"Human Health & Disease",src:"Aakash Module",diff:"Easy",exp:"Active immunity: body produces own antibodies after infection or vaccination → long-lasting"},
+  {q:"Aflatoxin is produced by:",opts:["Bacteria","Fungi (Aspergillus)","Virus","Protozoa"],ans:1,ch:"Human Health & Disease",src:"Motion Institute",diff:"Medium",exp:"Aflatoxin: mycotoxin produced by Aspergillus flavus/parasiticus on stored grains/nuts; carcinogenic"},
+
+  {q:"PCR requires which enzyme?",opts:["DNA polymerase II","Taq DNA polymerase","RNA polymerase","Ligase"],ans:1,ch:"Biotechnology Principles",src:"Allen Module",diff:"Easy",exp:"PCR uses Taq DNA polymerase (from Thermus aquaticus): heat-stable, survives denaturation step at 94°C"},
+  {q:"Selectable markers in vectors are used to:",opts:["Increase replication","Identify recombinant colonies","Provide promoter","Cut DNA"],ans:1,ch:"Biotechnology Principles",src:"NCERT Exemplar",diff:"Easy",exp:"Selectable markers (antibiotic resistance genes): allow selection of transformed cells on antibiotic medium"},
+  {q:"Recombinant DNA technology was made possible by discovery of:",opts:["PCR","Restriction endonucleases","CRISPR","Western blot"],ans:1,ch:"Biotechnology Principles",src:"Physics Wallah",diff:"Easy",exp:"Restriction enzymes (1970s): cut DNA at specific sequences → ability to cut and join specific DNA fragments"},
+  {q:"Blunt ends are produced by:",opts:["EcoRI","BamHI","HaeIII","HindIII"],ans:2,ch:"Biotechnology Principles",src:"Aakash Module",diff:"Hard",exp:"HaeIII cuts DNA straight across (GG↓CC) → blunt ends. EcoRI, BamHI, HindIII produce sticky (cohesive) ends"},
+  {q:"Southern blotting detects:",opts:["RNA","Protein","DNA","Lipids"],ans:2,ch:"Biotechnology Principles",src:"Motion Institute",diff:"Medium",exp:"Southern blotting: DNA detection. Northern: RNA. Western: protein. (Mnemonics: DNA-South, RNA-North, Protein-West)"},
+
+  {q:"Biopiracy refers to:",opts:["Biological terrorism","Unauthorized use of traditional knowledge/biological resources","Piracy of ships","Biodiversity conservation"],ans:1,ch:"Biotechnology Applications",src:"Allen Module",diff:"Easy",exp:"Biopiracy: exploitation of biodiversity and traditional knowledge without benefit-sharing (e.g., turmeric, neem patents)"},
+  {q:"Cry proteins (from Bt) are toxic to insects but not mammals because:",opts:["Mammals have fur","Insects have specific receptors in gut; mammals don't","Temperature difference","Different digestive systems"],ans:1,ch:"Biotechnology Applications",src:"NCERT Exemplar",diff:"Medium",exp:"Cry proteins activated at insect gut pH; bind specific receptor proteins in insect midgut; mammalian gut lacks these receptors"},
+  {q:"RNAi (RNA interference) involves:",opts:["mRNA translation","Gene silencing by dsRNA","DNA replication","Protein degradation directly"],ans:1,ch:"Biotechnology Applications",src:"Physics Wallah",diff:"Hard",exp:"RNAi: double-stranded RNA triggers degradation of complementary mRNA → gene silencing (post-transcriptional)"},
+
+  {q:"K-strategist species characteristics:",opts:["Many small offspring, short life","Few large offspring, long life, parental care","Rapid reproduction","Boom-bust population cycle"],ans:1,ch:"Organisms & Populations",src:"Allen Module",diff:"Medium",exp:"K-strategists: few offspring, high parental investment, long life (elephants, humans). r-strategists: many small offspring"},
+  {q:"Commensalism: one organism benefits, other:",opts:["Is harmed","Neither benefits nor harmed","Also benefits","Is killed"],ans:1,ch:"Organisms & Populations",src:"NCERT Exemplar",diff:"Easy",exp:"Commensalism: +/0 interaction. One benefits, other unaffected (e.g., orchids on trees, barnacles on whales)"},
+  {q:"Intraspecific competition is between:",opts:["Different species","Same species individuals","Predator and prey","Parasite and host"],ans:1,ch:"Organisms & Populations",src:"Physics Wallah",diff:"Easy",exp:"Intraspecific: competition within same species for same resources (food, territory, mates)"},
+  {q:"Ecological niche refers to:",opts:["Habitat only","Role and position of organism in ecosystem","Physical environment","Nutrient availability"],ans:1,ch:"Organisms & Populations",src:"Aakash Module",diff:"Medium",exp:"Ecological niche: an organism's functional role in ecosystem; includes habitat, diet, behaviour, interactions"},
+  {q:"Competitive exclusion principle states two species competing for:",opts:["Same niche cannot coexist indefinitely","Different niches coexist","Same food always coexist","Separate resources"],ans:0,ch:"Organisms & Populations",src:"Motion Institute",diff:"Medium",exp:"Gause's principle: two species occupying identical niches cannot coexist; one displaces the other"},
+
+  {q:"Standing crop in ecosystem represents:",opts:["Rate of production","Amount of living biomass at a given time","Total energy flow","Number of organisms only"],ans:1,ch:"Ecosystem",src:"Allen Module",diff:"Medium",exp:"Standing crop: total living biomass (or number) present in ecosystem at a given time"},
+  {q:"Net primary productivity = GPP minus:",opts:["Respiration by producers","Herbivore consumption","Decomposition","Soil absorption"],ans:0,ch:"Ecosystem",src:"NCERT Exemplar",diff:"Easy",exp:"NPP = GPP - R (respiration of producers). This is what's available for heterotrophs"},
+  {q:"Nitrogen fixation is carried out by:",opts:["Fungi","Nitrogen-fixing bacteria (e.g., Rhizobium)","Green plants","Viruses"],ans:1,ch:"Ecosystem",src:"Physics Wallah",diff:"Easy",exp:"Nitrogen fixation: conversion of N₂ to NH₃ by nitrogen-fixing bacteria (Rhizobium, Azotobacter, cyanobacteria)"},
+  {q:"Eutrophication primarily leads to:",opts:["Increase in biodiversity","Depletion of dissolved oxygen","Increased fish production","Clear water"],ans:1,ch:"Ecosystem",src:"Aakash Module",diff:"Medium",exp:"Eutrophication: nutrient enrichment → algal bloom → algae die → bacterial decomposition → O₂ depletion → dead zones"},
+  {q:"Biomagnification occurs when:",opts:["Energy increases up food chain","Toxin concentration increases up food chain","Population decreases","Biodiversity increases"],ans:1,ch:"Ecosystem",src:"Motion Institute",diff:"Medium",exp:"Biomagnification: persistent toxins (DDT, methylmercury) accumulate at higher concentrations at higher trophic levels"},
+
+  {q:"IUCN Red List category for species facing very high risk of extinction in wild:",opts:["Least Concern","Vulnerable","Endangered","Critically Endangered"],ans:3,ch:"Biodiversity",src:"Allen Module",diff:"Medium",exp:"IUCN categories: Least Concern→Near Threatened→Vulnerable→Endangered→Critically Endangered→Extinct in Wild→Extinct"},
+  {q:"Hotspot of biodiversity must have minimum __ endemic species of plants:",opts:["500","1500","2000","0"],ans:1,ch:"Biodiversity",src:"NCERT Exemplar",diff:"Hard",exp:"Myers criteria for hotspot: ≥1500 endemic vascular plant species AND lost ≥70% of original habitat"},
+  {q:"Silent Valley movement in India was against:",opts:["Air pollution","A hydroelectric project threatening rainforest","Mining","Nuclear plant"],ans:1,ch:"Biodiversity",src:"Physics Wallah",diff:"Medium",exp:"Silent Valley movement (1970s-80s Kerala): protest against dam project that would flood tropical rainforest; ultimately saved"},
+  {q:"In-situ conservation includes:",opts:["Botanical gardens","Wildlife sanctuaries and national parks","Zoos","Seed banks"],ans:1,ch:"Biodiversity",src:"Aakash Module",diff:"Easy",exp:"In-situ = conservation in natural habitat; includes national parks, wildlife sanctuaries, biosphere reserves"},
+  {q:"Convention on Biological Diversity was signed at:",opts:["Stockholm 1972","Rio de Janeiro 1992","Kyoto 1997","Johannesburg 2002"],ans:1,ch:"Biodiversity",src:"Motion Institute",diff:"Medium",exp:"Convention on Biological Diversity (CBD): signed at Earth Summit, Rio de Janeiro, 1992"},
   ]
 };
 
@@ -1230,140 +1552,63 @@ body {
   margin: 8px 0;
 }
 
-/* ─── SCANNER ───────────────────────────────── */
-.scanner-bar {
-  background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%);
-  border-radius: var(--radius-lg);
-  padding: 18px 22px;
+
+/* ─── NEET SECTION TABS ──────────────────── */
+.section-tabs {
   display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 22px;
-  flex-wrap: wrap;
-  box-shadow: var(--shadow-md);
-}
-.scanner-icon { font-size: 28px; flex-shrink: 0; }
-.scanner-text { flex: 1; min-width: 160px; }
-.scanner-title { font-size: 15px; font-weight: 700; color: white; margin-bottom: 2px; }
-.scanner-sub { font-size: 12px; color: rgba(255,255,255,.75); }
-.scanner-btns { display: flex; gap: 8px; flex-wrap: wrap; }
-.scan-btn {
-  padding: 8px 16px;
-  background: rgba(255,255,255,.18);
-  border: 1px solid rgba(255,255,255,.3);
+  gap: 0;
+  background: var(--bg2);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  color: white;
+  padding: 3px;
+  margin-bottom: 18px;
+  width: fit-content;
+}
+.sec-tab {
+  padding: 7px 18px;
+  border-radius: calc(var(--radius) - 2px);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: all .15s;
+  border: none;
+  background: transparent;
+  color: var(--text3);
   font-family: inherit;
+  transition: all .15s;
   display: flex; align-items: center; gap: 6px;
 }
-.scan-btn:hover { background: rgba(255,255,255,.28); }
-.scan-btn.primary { background: white; color: var(--blue); border-color: white; }
-.scan-btn.primary:hover { background: #EFF2FF; }
-
-.scanner-modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,.55);
-  z-index: 600;
-  display: flex; align-items: center; justify-content: center;
-  padding: 16px;
-  backdrop-filter: blur(3px);
-}
-.scanner-modal {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 28px;
-  width: 100%;
-  max-width: 580px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 24px 48px rgba(0,0,0,.2);
-  animation: fadeIn .2s ease;
-}
-.scanner-preview {
-  width: 100%;
-  max-height: 260px;
-  object-fit: contain;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--bg2);
-  margin: 12px 0;
-}
-.scan-drop-zone {
-  border: 2px dashed var(--border2);
-  border-radius: var(--radius);
-  padding: 36px 20px;
+.sec-tab:hover { color: var(--text); }
+.sec-tab.active { background: var(--card); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+.sec-tab.phy.active { color: #2563EB; }
+.sec-tab.che.active { color: #16A34A; }
+.sec-tab.bio.active { color: #D97706; }
+.sec-badge {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-weight: 700;
+  min-width: 18px;
   text-align: center;
-  cursor: pointer;
-  transition: all .2s;
-  background: var(--bg2);
-  margin: 12px 0;
 }
-.scan-drop-zone:hover { border-color: var(--blue); background: var(--blue-lt); }
-.scan-drop-icon { font-size: 36px; margin-bottom: 8px; }
-.scan-drop-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-.scan-drop-sub { font-size: 12px; color: var(--text3); }
-.solution-box {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px;
-  margin-top: 14px;
-}
-.sol-section { margin-bottom: 14px; }
-.sol-label {
+.sec-badge.phy { background: #DBEAFE; color: #1D4ED8; }
+.sec-badge.che { background: #DCFCE7; color: #15803D; }
+.sec-badge.bio { background: #FEF3C7; color: #B45309; }
+.pal-section-head {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 6px;
-}
-.sol-text { font-size: 14px; line-height: 1.7; color: var(--text); }
-.sol-steps { counter-reset: step; }
-.sol-step {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-  font-size: 13.5px;
-  line-height: 1.65;
-}
-.sol-step-num {
-  min-width: 22px; height: 22px;
-  background: var(--blue);
-  color: white;
-  border-radius: 50%;
-  font-size: 11px;
-  font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.sol-answer {
-  background: var(--green-lt);
-  border: 1px solid var(--green-bd);
-  border-radius: var(--radius);
-  padding: 12px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--green);
+  padding: 6px 0 4px;
   margin-top: 10px;
-}
-.q-bank-counter {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 5px;
-  background: var(--blue-lt);
-  border: 1px solid var(--blue-bd);
-  border-radius: 20px;
-  padding: 3px 10px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--blue);
-  margin-bottom: 12px;
+  gap: 6px;
+}
+.pal-section-head:first-child { margin-top: 0; }
+.pal-section-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 8px 0;
 }
 
 `;
@@ -1411,19 +1656,11 @@ export default function NEETTutor() {
 
   const timerRef = useRef(null);
   const photoRef = useRef(null);
-  const scanFileRef = useRef(null);
 
   // ── Question cache (localStorage) — grows over time ──
   const [qCache, setQCache] = useState(() => {
     try { return JSON.parse(localStorage.getItem("neet_qcache") || "{}"); } catch { return {}; }
   });
-
-  // ── Scanner state ──
-  const [scanOpen, setScanOpen]     = useState(false);
-  const [scanImg, setScanImg]       = useState(null);       // base64
-  const [scanLoading, setScanLoading] = useState(false);
-  const [scanResult, setScanResult] = useState(null);       // {question, answer, steps, concept, tip}
-  const [scanError, setScanError]   = useState("");
 
   // Inject CSS
   useEffect(() => {
@@ -1559,92 +1796,6 @@ JSON format:
     // Cache for future use
     saveToCache(subject, chapter, result);
     return result;
-  }
-
-  // ── Scanner: solve question from image ──
-  async function solveScannedQuestion(base64Image) {
-    const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY || "";
-    setScanLoading(true);
-    setScanResult(null);
-    setScanError("");
-    try {
-      const resp = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(apiKey ? { "x-api-key": apiKey } : {})
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 2048,
-          messages: [{
-            role: "user",
-            content: [
-              {
-                type: "image",
-                source: {
-                  type: "base64",
-                  media_type: "image/jpeg",
-                  data: base64Image.replace(/^data:image\/(jpeg|png|webp|gif);base64,/, "")
-                }
-              },
-              {
-                type: "text",
-                text: `You are an expert NEET tutor. Analyze this question image and provide a complete solution.
-
-Return ONLY a JSON object (no markdown, no backticks):
-{
-  "question": "The question text as you read it from the image",
-  "subject": "Physics/Chemistry/Biology",
-  "chapter": "Chapter name",
-  "difficulty": "Easy/Medium/Hard",
-  "answer": "The correct answer (full option text)",
-  "correct_option": "A/B/C/D",
-  "steps": ["Step 1: ...", "Step 2: ...", "Step 3: ..."],
-  "concept": "The core concept/formula being tested",
-  "tip": "Memory tip or shortcut for this concept",
-  "similar_pyq": "Year of a similar NEET/AIPMT question if you know one"
-}`
-              }
-            ]
-          }]
-        })
-      });
-      const data = await resp.json();
-      const raw = (data.content?.[0]?.text || "{}").replace(/```json|```/g, "").trim();
-      const jsonMatch = raw.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) throw new Error("Could not parse solution");
-      const result = JSON.parse(jsonMatch[0]);
-      setScanResult(result);
-    } catch(e) {
-      setScanError("Could not solve the question. Please try a clearer image.");
-    }
-    setScanLoading(false);
-  }
-
-  function handleScanFile(e) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      setScanImg(ev.target.result);
-      setScanResult(null);
-      setScanError("");
-    };
-    reader.readAsDataURL(file);
-  }
-
-  function handleScanDrop(e) {
-    e.preventDefault();
-    const file = e.dataTransfer.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      setScanImg(ev.target.result);
-      setScanResult(null);
-      setScanError("");
-    };
-    reader.readAsDataURL(file);
   }
 
     // Returns questions strictly filtered by subject and/or chapter — NEVER mixes other chapters
@@ -1842,116 +1993,6 @@ Return ONLY a JSON object (no markdown, no backticks):
       </header>
       <div className="page">
 
-        {/* ── QUESTION SCANNER BAR ── */}
-        <input ref={scanFileRef} type="file" accept="image/*" capture="environment" style={{display:"none"}} onChange={handleScanFile} />
-        <div className="scanner-bar">
-          <div className="scanner-icon">📷</div>
-          <div className="scanner-text">
-            <div className="scanner-title">Question Scanner — Instant AI Solution</div>
-            <div className="scanner-sub">Scan any NEET question from book, paper or screen — get step-by-step solution</div>
-          </div>
-          <div className="scanner-btns">
-            <button className="scan-btn" onClick={() => { scanFileRef.current.removeAttribute("capture"); scanFileRef.current.click(); }}>📁 Upload Image</button>
-            <button className="scan-btn primary" onClick={() => { scanFileRef.current.setAttribute("capture","environment"); scanFileRef.current.click(); }}>📷 Open Camera</button>
-          </div>
-        </div>
-
-        {/* Scanner Modal */}
-        {(scanImg || scanOpen) && (
-          <div className="scanner-modal-overlay" onClick={() => { setScanOpen(false); setScanImg(null); setScanResult(null); }}>
-            <div className="scanner-modal" onClick={e => e.stopPropagation()}>
-              <div style={{display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:"16px"}}>
-                <div>
-                  <div style={{fontSize:"17px", fontWeight:"700"}}>📷 AI Question Solver</div>
-                  <div style={{fontSize:"12px", color:"var(--text3)"}}>Upload or scan a NEET question for detailed solution</div>
-                </div>
-                <button className="btn btn-ghost btn-sm" onClick={() => { setScanImg(null); setScanResult(null); setScanOpen(false); }}>✕</button>
-              </div>
-
-              {!scanImg ? (
-                <div className="scan-drop-zone"
-                  onDragOver={e => e.preventDefault()}
-                  onDrop={handleScanDrop}
-                  onClick={() => scanFileRef.current?.click()}>
-                  <div className="scan-drop-icon">🖼️</div>
-                  <div className="scan-drop-title">Drop image here or click to browse</div>
-                  <div className="scan-drop-sub">Supports JPG, PNG, screenshots · Max 5 MB</div>
-                </div>
-              ) : (
-                <>
-                  <img src={scanImg} alt="Question" className="scanner-preview" />
-                  <div style={{display:"flex", gap:"8px", marginBottom:"12px", flexWrap:"wrap"}}>
-                    <button className="btn btn-primary" onClick={() => solveScannedQuestion(scanImg)} disabled={scanLoading}>
-                      {scanLoading ? "⏳ Solving..." : "🔍 Solve This Question"}
-                    </button>
-                    <button className="btn btn-outline btn-sm" onClick={() => { setScanImg(null); setScanResult(null); }}>Change Image</button>
-                  </div>
-                </>
-              )}
-
-              {scanLoading && (
-                <div style={{textAlign:"center", padding:"24px", color:"var(--text3)"}}>
-                  <div className="spinner" style={{margin:"0 auto 12px"}} />
-                  <div style={{fontSize:"14px", fontWeight:"500"}}>Analyzing question with AI...</div>
-                  <div style={{fontSize:"12px", marginTop:"4px"}}>Reading question → Understanding concept → Building solution</div>
-                </div>
-              )}
-
-              {scanError && (
-                <div style={{background:"var(--red-lt)", border:"1px solid var(--red-bd)", borderRadius:"var(--radius)", padding:"12px 16px", color:"var(--red)", fontSize:"13px", marginTop:"8px"}}>
-                  ⚠️ {scanError}
-                </div>
-              )}
-
-              {scanResult && (
-                <div className="solution-box">
-                  <div className="sol-section">
-                    <div className="sol-label" style={{color:"var(--blue)"}}>📝 Question Identified</div>
-                    <div className="sol-text" style={{fontFamily:"Merriweather, Georgia, serif", fontSize:"14px"}}>{scanResult.question}</div>
-                    <div style={{display:"flex", gap:"6px", marginTop:"8px", flexWrap:"wrap"}}>
-                      {scanResult.subject && <span className="tag tag-blue">{scanResult.subject}</span>}
-                      {scanResult.chapter && <span className="tag tag-gray">{scanResult.chapter}</span>}
-                      {scanResult.difficulty && <span className={`diff-tag d-${scanResult.difficulty}`}>{scanResult.difficulty}</span>}
-                      {scanResult.similar_pyq && <span className="tag tag-gold">Similar: {scanResult.similar_pyq}</span>}
-                    </div>
-                  </div>
-
-                  <div className="sol-answer">
-                    ✅ Correct Answer: {scanResult.correct_option && `(${scanResult.correct_option})`} {scanResult.answer}
-                  </div>
-
-                  {scanResult.steps && scanResult.steps.length > 0 && (
-                    <div className="sol-section" style={{marginTop:"14px"}}>
-                      <div className="sol-label" style={{color:"var(--green)"}}>📐 Step-by-Step Solution</div>
-                      <div className="sol-steps">
-                        {scanResult.steps.map((step, i) => (
-                          <div key={i} className="sol-step">
-                            <div className="sol-step-num">{i+1}</div>
-                            <div>{step.replace(/^Step \d+:\s*/i, "")}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {scanResult.concept && (
-                    <div style={{background:"var(--blue-lt)", border:"1px solid var(--blue-bd)", borderRadius:"var(--radius)", padding:"12px 14px", marginTop:"10px"}}>
-                      <div style={{fontSize:"11px", fontWeight:"700", color:"var(--blue)", textTransform:"uppercase", letterSpacing:"0.4px", marginBottom:"4px"}}>💡 Core Concept</div>
-                      <div style={{fontSize:"13px", color:"var(--text)"}}>{scanResult.concept}</div>
-                    </div>
-                  )}
-
-                  {scanResult.tip && (
-                    <div style={{background:"var(--gold-lt)", border:"1px solid var(--gold-bd)", borderRadius:"var(--radius)", padding:"12px 14px", marginTop:"8px"}}>
-                      <div style={{fontSize:"11px", fontWeight:"700", color:"var(--gold)", textTransform:"uppercase", letterSpacing:"0.4px", marginBottom:"4px"}}>🎯 Quick Tip</div>
-                      <div style={{fontSize:"13px", color:"var(--text)"}}>{scanResult.tip}</div>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-        )}
 
         <div className="home-hero">
           <div className="hero-title">NEET Guru — AI-Powered Preparation</div>
@@ -1966,11 +2007,6 @@ Return ONLY a JSON object (no markdown, no backticks):
           </div>
         </div>
 
-        {/* Cache counter */}
-        {totalCached() > 0 && (
-          <div className="q-bank-counter">
-            📚 {228 + totalCached()}+ questions in your bank · grows with every test
-          </div>
         )}
 
         {profile.name && (
