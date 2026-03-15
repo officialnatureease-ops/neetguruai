@@ -1657,10 +1657,7 @@ export default function NEETTutor() {
   const timerRef = useRef(null);
   const photoRef = useRef(null);
 
-  // ── Question cache (localStorage) — grows over time ──
-  const [qCache, setQCache] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("neet_qcache") || "{}"); } catch { return {}; }
-  });
+  // Question bank: 502 local questions, shuffled fresh each test
 
   // Inject CSS
   useEffect(() => {
@@ -1706,118 +1703,50 @@ export default function NEETTutor() {
     if (photoRef.current) photoRef.current.value = "";
   }
 
-  // ── Save questions to cache ──
-  function saveToCache(subject, chapter, newQs) {
-    if (!newQs || newQs.length === 0) return;
-    const key = chapter ? `${subject}::${chapter}` : subject;
-    setQCache(prev => {
-      const existing = prev[key] || [];
-      const seen = new Set(existing.map(q => q.q));
-      const fresh = newQs.filter(q => !seen.has(q.q));
-      const updated = { ...prev, [key]: [...existing, ...fresh].slice(0, 500) };
-      try { localStorage.setItem("neet_qcache", JSON.stringify(updated)); } catch {}
-      return updated;
-    });
-  }
 
-  // ── Get cached questions ──
-  function getCached(subject, chapter, count) {
-    const key = chapter ? `${subject}::${chapter}` : subject;
-    const pool = qCache[key] || [];
-    return shuffle(pool).slice(0, count);
-  }
 
-  // ── Total cached count ──
-  function totalCached() {
-    return Object.values(qCache).reduce((s, arr) => s + arr.length, 0);
-  }
 
   // ── AI question generation with web search + caching ──
-  async function generateAI(subject, chapter, count) {
-    const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY || "";
-    const resp = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...(apiKey ? { "x-api-key": apiKey } : {})
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 8192,
-        tools: [{ "type": "web_search_20250305", "name": "web_search" }],
-        messages: [{
-          role: "user",
-          content: `You are a NEET exam question generator. Use your web_search tool to find real questions from NEET coaching institutes online, then generate high quality questions.
-
-SUBJECT: ${subject}
-${chapter ? `CHAPTER: ${chapter}` : `SCOPE: All chapters of ${subject}`}
-QUESTIONS NEEDED: ${count}
-
-STEP 1: Search for questions from these sources on the web:
-- "NEET ${subject} ${chapter || ''} questions Allen Kota"
-- "NEET ${subject} ${chapter || ''} MCQ Physics Wallah"  
-- "NEET ${subject} ${chapter || ''} questions Motion Institute"
-- "AIPMT ${subject} ${chapter || ''} previous year questions"
-
-STEP 2: Based on your search results and your knowledge, generate exactly ${count} high-quality NEET MCQs.
-
-STRICT RULES:
-1. Every question MUST be about ${subject} — ${chapter ? `specifically chapter "${chapter}"` : 'covering different chapters'}.
-2. Return ONLY a raw JSON array — no markdown, no backticks, no extra text before or after.
-3. Vary difficulty: ~30% Easy, ~50% Medium, ~20% Hard.
-4. All 4 options must be scientifically correct and plausible.
-5. Explanations must include the concept/formula used.
-6. "src" should reflect the real source or style: Allen Module, Physics Wallah, Motion Institute, Aakash Module, NEET 2020-2025, AIPMT 1999-2015, NCERT Exemplar.
-
-JSON format:
-[{"q":"Question?","opts":["A","B","C","D"],"ans":0,"src":"NEET 2023","diff":"Medium","exp":"Explanation.","ch":"${chapter || subject}"}]`
-        }]
-      })
-    });
-    const data = await resp.json();
-    // Extract text from response (may have tool use blocks)
-    const textBlocks = (data.content || []).filter(b => b.type === "text");
-    const raw = textBlocks.map(b => b.text).join("") || "[]";
-    // Extract JSON array from response
-    const jsonMatch = raw.match(/\[[\s\S]*\]/);
-    if (!jsonMatch) throw new Error("no JSON array in response");
-    const parsed = JSON.parse(jsonMatch[0]);
-    if (!Array.isArray(parsed) || parsed.length === 0) throw new Error("empty response");
-    const result = parsed.map(q => ({
-      q:    String(q.q || ""),
-      opts: Array.isArray(q.opts) ? q.opts.map(String) : ["A","B","C","D"],
-      ans:  Number(q.ans) || 0,
-      ch:   String(chapter || q.ch || subject),
-      src:  String(q.src || "NCERT Exemplar"),
-      diff: ["Easy","Medium","Hard"].includes(q.diff) ? q.diff : "Medium",
-      exp:  String(q.exp || "Refer NCERT for explanation."),
-      subject
-    }));
-    // Cache for future use
-    saveToCache(subject, chapter, result);
-    return result;
-  }
-
-    // Returns questions strictly filtered by subject and/or chapter — NEVER mixes other chapters
-  function getLocal(subject, chapter, count) {
+  // ── Smart local question fetcher ──
+  function getSmartPool(subject, chapter, count) {
     let pool = [];
     if (!subject) {
-      Object.entries(ALL_LOCAL).forEach(([sub, qs]) => qs.forEach(q => pool.push({ ...q, subject: sub })));
+      Object.entries(ALL_LOCAL).forEach(([sub, qs]) =>
+        qs.forEach(q => pool.push({ ...q, subject: sub }))
+      );
     } else {
       pool = (ALL_LOCAL[subject] || []).map(q => ({ ...q, subject }));
       if (chapter) {
-        // Exact match first, then partial — but NEVER fall back to other chapters
         const exact   = pool.filter(q => q.ch === chapter);
         const partial = pool.filter(q =>
           q.ch?.toLowerCase().includes(chapter.toLowerCase()) ||
-          chapter.toLowerCase().includes(q.ch?.toLowerCase())
+          chapter.toLowerCase().includes((q.ch||"").toLowerCase())
         );
-        // Strict: only chapter-specific questions, no mixing of other chapters
         pool = exact.length > 0 ? exact : partial.length > 0 ? partial : [];
       }
     }
-    return shuffle(pool).slice(0, count);
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    return pool.slice(0, count);
   }
+
+  // ── Fetch questions from Vercel serverless backend ──
+  // Server calls Anthropic + web search — no CORS issues
+  async function fetchFromServer(subject, chapter, count) {
+    const resp = await fetch("/api/questions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ subject, chapter, count })
+    });
+    if (!resp.ok) throw new Error(`Server error: ${resp.status}`);
+    const data = await resp.json();
+    if (!data.questions || data.questions.length === 0) throw new Error("No questions returned");
+    return data.questions;
+  }
+
+
 
   // ── Start test ──
   async function startTest() {
@@ -1827,73 +1756,81 @@ JSON format:
     const time  = testMode === "full" ? 200 : nMin;
     let qs = [];
 
+    // ── Helper: merge lists, deduplicate by question text ──
+    const seen = new Set();
+    const addQs = (list) => {
+      for (const q of (list || [])) {
+        if (q && q.q && !seen.has(q.q)) { seen.add(q.q); qs.push(q); }
+      }
+    };
+
     if (testMode === "full") {
-      // ✅ REAL NEET PATTERN: Physics=45, Chemistry=45, Biology=90 (Botany 45 + Zoology 45) = 180
+      // ✅ NEET Pattern: Physics=45, Chemistry=45, Biology=90 = 180 total
       const sectionConfig = [
         { sub: "Physics",   count: 45, label: "Section A — Physics"   },
         { sub: "Chemistry", count: 45, label: "Section B — Chemistry" },
-        { sub: "Biology",   count: 90, label: "Section C — Biology (Botany + Zoology)" },
+        { sub: "Biology",   count: 90, label: "Section C — Biology"   },
       ];
       for (const { sub, count, label } of sectionConfig) {
-        setLmsg(`Loading ${label}...`);
         const subSeen = new Set();
         const subQs = [];
         const addSub = (list) => {
-          for (const q of (list||[])) {
-            if (q.q && !subSeen.has(q.q)) { subSeen.add(q.q); subQs.push({...q, subject: sub}); }
+          for (const q of (list || [])) {
+            if (q && q.q && !subSeen.has(q.q)) { subSeen.add(q.q); subQs.push({...q, subject: sub}); }
           }
         };
-        addSub(getCached(sub, null, count));
-        addSub(getLocal(sub, null, count));
+
+        // Step 1: Local bank (instant)
+        setLmsg(`Loading ${label} from local bank...`);
+        addSub(getSmartPool(sub, null, count * 2));
+
+        // Step 2: Fetch more from server (web search) if needed
         if (subQs.length < count) {
-          try { addSub(await generateAI(sub, null, count)); } catch {}
+          setLmsg(`Fetching ${label} from internet...`);
+          try {
+            addSub(await fetchFromServer(sub, null, count));
+          } catch (e) {
+            console.warn("Server fetch failed for", sub, e.message);
+          }
         }
-        if (subQs.length < count) {
-          try { addSub(await generateAI(sub, null, count)); } catch {}
-        }
+
         qs.push(...subQs.slice(0, count));
       }
+
     } else {
       // ── Subject-wise or Chapter-wise test ──
       const label = selCh ? `${selCh} (${selSub})` : selSub;
-      const seen = new Set();
-      const addQs = (list) => {
-        for (const q of (list || [])) {
-          if (q.q && !seen.has(q.q)) { seen.add(q.q); qs.push(q); }
-        }
-      };
 
-      // Step 1: Cached questions (instant — grows with every test)
-      setLmsg(`Loading ${label} questions from bank...`);
-      addQs(getCached(selSub, selCh || null, total));
+      // Step 1: Local bank immediately (no wait)
+      setLmsg(`Loading ${label} from local bank...`);
+      addQs(getSmartPool(selSub, selCh || null, total * 3));
 
-      // Step 2: Local hardcoded PYQ bank
-      const localQs = selCh ? getLocal(selSub, selCh, total) : getLocal(selSub, null, total);
-      addQs(localQs);
-
-      // Step 3: AI + web search (searches Allen, PW, Motion, Aakash online)
+      // Step 2: Fetch from server in parallel for more variety
       if (qs.length < total) {
-        setLmsg(`Searching institutes online for ${label} questions...`);
+        setLmsg(`Searching internet for ${label} questions...`);
         try {
-          const aiQs = await generateAI(selSub, selCh || null, Math.max(total, 30));
-          addQs(aiQs);
-        } catch {
-          setLmsg("Using local question bank...");
+          const serverQs = await fetchFromServer(selSub, selCh || null, Math.max(total, 30));
+          addQs(serverQs);
+        } catch (e) {
+          console.warn("Server fetch failed:", e.message);
+          // Silent fallback — local bank already loaded
         }
       }
 
-      // Step 4: Second AI pass if still short
-      if (qs.length < total) {
-        setLmsg(`Fetching more ${label} questions...`);
-        try {
-          const more = await generateAI(selSub, selCh || null, total);
-          addQs(more);
-        } catch {}
+      // Step 3: Still short? Expand to full subject pool (same subject)
+      if (qs.length < total && selCh) {
+        setLmsg("Loading more questions...");
+        const fallback = getSmartPool(selSub, null, total * 2);
+        addQs(fallback.filter(q =>
+          q.ch === selCh ||
+          q.ch?.toLowerCase().includes(selCh.toLowerCase()) ||
+          selCh.toLowerCase().includes((q.ch||"").toLowerCase())
+        ));
       }
     }
 
     // Final safety net — should never be empty
-    if (qs.length === 0) qs = getLocal(null, null, Math.min(total, 20));
+    if (qs.length === 0) qs = getSmartPool(null, null, Math.min(total, 20));
 
     setQuestions(qs.slice(0, total));
     setTimeLeft(time * 60);
