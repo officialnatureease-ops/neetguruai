@@ -1732,8 +1732,32 @@ export default function NEETTutor() {
     return pool.slice(0, count);
   }
 
-  // ── Fetch questions from Vercel serverless backend ──
-  // Server calls Anthropic + web search — no CORS issues
+  // ── Question cache key ──
+  function cacheKey(subject, chapter) {
+    return `neet_q_${subject}_${chapter || "all"}`.replace(/\s+/g, "_");
+  }
+
+  // ── Load cached questions from localStorage ──
+  function loadCache(subject, chapter) {
+    try {
+      const raw = localStorage.getItem(cacheKey(subject, chapter));
+      return raw ? JSON.parse(raw) : [];
+    } catch { return []; }
+  }
+
+  // ── Save questions to localStorage cache ──
+  function saveCache(subject, chapter, newQs) {
+    try {
+      const existing = loadCache(subject, chapter);
+      const seen = new Set(existing.map(q => q.q.substring(0, 40).toLowerCase()));
+      const fresh = newQs.filter(q => !seen.has(q.q.substring(0, 40).toLowerCase()));
+      const merged = [...existing, ...fresh].slice(0, 500); // max 500 per chapter
+      localStorage.setItem(cacheKey(subject, chapter), JSON.stringify(merged));
+      return merged;
+    } catch { return newQs; }
+  }
+
+  // ── Fetch from server + save to cache ──
   async function fetchFromServer(subject, chapter, count) {
     const resp = await fetch("/api/questions", {
       method: "POST",
@@ -1742,8 +1766,53 @@ export default function NEETTutor() {
     });
     if (!resp.ok) throw new Error(`Server error: ${resp.status}`);
     const data = await resp.json();
-    if (!data.questions || data.questions.length === 0) throw new Error("No questions returned");
+    if (!data.questions || data.questions.length === 0) throw new Error("No questions");
+    // Cache for future use — questions grow over time
+    saveCache(subject, chapter, data.questions);
     return data.questions;
+  }
+
+  // ── Master question getter: local + cache + server ──
+  // Ensures maximum unique questions, no repeats
+  async function getQuestions(subject, chapter, count, onProgress) {
+    const seen = new Set();
+    const result = [];
+
+    const addQs = (list) => {
+      for (const q of (list || [])) {
+        const key = (q.q || "").substring(0, 40).toLowerCase();
+        if (q.q && !seen.has(key)) { seen.add(key); result.push(q); }
+      }
+    };
+
+    // Layer 1: Cached questions from previous sessions (instant)
+    onProgress?.("Loading from question bank...");
+    addQs(loadCache(subject, chapter));
+
+    // Layer 2: Local hardcoded bank (instant)
+    addQs(getSmartPool(subject, chapter || null, count * 3));
+
+    // Layer 3: Fetch from server if still need more
+    if (result.length < count) {
+      onProgress?.(`Fetching ${count - result.length} more questions from internet...`);
+      try {
+        const serverQs = await fetchFromServer(subject, chapter, count);
+        addQs(serverQs);
+      } catch (e) {
+        console.warn("Server fetch failed:", e.message);
+      }
+    }
+
+    // Layer 4: Second server call if still short (different questions due to parallel prompts)
+    if (result.length < count) {
+      onProgress?.(`Loading additional questions...`);
+      try {
+        const more = await fetchFromServer(subject, chapter, count);
+        addQs(more);
+      } catch {}
+    }
+
+    return result.slice(0, count);
   }
 
 
@@ -1756,77 +1825,26 @@ export default function NEETTutor() {
     const time  = testMode === "full" ? 200 : nMin;
     let qs = [];
 
-    // ── Helper: merge lists, deduplicate by question text ──
-    const seen = new Set();
-    const addQs = (list) => {
-      for (const q of (list || [])) {
-        if (q && q.q && !seen.has(q.q)) { seen.add(q.q); qs.push(q); }
-      }
-    };
-
     if (testMode === "full") {
       // ✅ NEET Pattern: Physics=45, Chemistry=45, Biology=90 = 180 total
-      const sectionConfig = [
-        { sub: "Physics",   count: 45, label: "Section A — Physics"   },
-        { sub: "Chemistry", count: 45, label: "Section B — Chemistry" },
-        { sub: "Biology",   count: 90, label: "Section C — Biology"   },
-      ];
-      for (const { sub, count, label } of sectionConfig) {
-        const subSeen = new Set();
-        const subQs = [];
-        const addSub = (list) => {
-          for (const q of (list || [])) {
-            if (q && q.q && !subSeen.has(q.q)) { subSeen.add(q.q); subQs.push({...q, subject: sub}); }
-          }
-        };
-
-        // Step 1: Local bank (instant)
-        setLmsg(`Loading ${label} from local bank...`);
-        addSub(getSmartPool(sub, null, count * 2));
-
-        // Step 2: Fetch more from server (web search) if needed
-        if (subQs.length < count) {
-          setLmsg(`Fetching ${label} from internet...`);
-          try {
-            addSub(await fetchFromServer(sub, null, count));
-          } catch (e) {
-            console.warn("Server fetch failed for", sub, e.message);
-          }
-        }
-
-        qs.push(...subQs.slice(0, count));
+      for (const [sub, count, label] of [
+        ["Physics",   45, "Section A — Physics"],
+        ["Chemistry", 45, "Section B — Chemistry"],
+        ["Biology",   90, "Section C — Biology"],
+      ]) {
+        const subQs = await getQuestions(sub, null, count,
+          (msg) => setLmsg(msg)
+        );
+        qs.push(...subQs.map(q => ({...q, subject: sub})));
       }
 
     } else {
       // ── Subject-wise or Chapter-wise test ──
       const label = selCh ? `${selCh} (${selSub})` : selSub;
-
-      // Step 1: Local bank immediately (no wait)
-      setLmsg(`Loading ${label} from local bank...`);
-      addQs(getSmartPool(selSub, selCh || null, total * 3));
-
-      // Step 2: Fetch from server in parallel for more variety
-      if (qs.length < total) {
-        setLmsg(`Searching internet for ${label} questions...`);
-        try {
-          const serverQs = await fetchFromServer(selSub, selCh || null, Math.max(total, 30));
-          addQs(serverQs);
-        } catch (e) {
-          console.warn("Server fetch failed:", e.message);
-          // Silent fallback — local bank already loaded
-        }
-      }
-
-      // Step 3: Still short? Expand to full subject pool (same subject)
-      if (qs.length < total && selCh) {
-        setLmsg("Loading more questions...");
-        const fallback = getSmartPool(selSub, null, total * 2);
-        addQs(fallback.filter(q =>
-          q.ch === selCh ||
-          q.ch?.toLowerCase().includes(selCh.toLowerCase()) ||
-          selCh.toLowerCase().includes((q.ch||"").toLowerCase())
-        ));
-      }
+      const fetched = await getQuestions(selSub, selCh || null, total,
+        (msg) => setLmsg(msg)
+      );
+      qs.push(...fetched);
     }
 
     // Final safety net — should never be empty
