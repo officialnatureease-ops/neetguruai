@@ -1039,7 +1039,7 @@ export default function NEETTutor() {
 
 
   // ── AI question generation with web search + caching ──
-  // ── Smart local question fetcher ──
+  // ── Local fallback — strict subject+chapter filter ──
   function getSmartPool(subject, chapter, count) {
     let pool = [];
     if (!subject) {
@@ -1047,13 +1047,16 @@ export default function NEETTutor() {
         qs.forEach(q => pool.push({ ...q, subject: sub }))
       );
     } else {
+      // STRICT: only this subject
       pool = (ALL_LOCAL[subject] || []).map(q => ({ ...q, subject }));
       if (chapter) {
+        // STRICT: only this chapter
         const exact   = pool.filter(q => q.ch === chapter);
         const partial = pool.filter(q =>
           q.ch?.toLowerCase().includes(chapter.toLowerCase()) ||
-          chapter.toLowerCase().includes((q.ch||"").toLowerCase())
+          chapter.toLowerCase().includes((q.ch || "").toLowerCase())
         );
+        // Never fall back to other chapters
         pool = exact.length > 0 ? exact : partial.length > 0 ? partial : [];
       }
     }
@@ -1118,7 +1121,7 @@ export default function NEETTutor() {
     };
 
     // Layer 1: API call (Gemini — fresh questions every time)
-    onProgress?.(`Searching for ${chapter || subject} questions...`);
+    onProgress?.(`🌐 Searching internet for ${chapter || subject} questions...`);
     try {
       const apiQs = await fetchFromServer(subject, chapter, count);
       addQs(apiQs);
@@ -1128,7 +1131,7 @@ export default function NEETTutor() {
 
     // Layer 2: Second API call if need more (3 parallel inside server already, this adds more variety)
     if (result.length < count) {
-      onProgress?.(`Fetching more questions...`);
+      onProgress?.(`📚 Fetching more questions from Allen · PW · Motion...`);
       try {
         const more = await fetchFromServer(subject, chapter, count - result.length + 10);
         addQs(more);
@@ -1140,11 +1143,22 @@ export default function NEETTutor() {
 
     // Layer 4: Local emergency fallback (only if API completely failed)
     if (result.length === 0) {
-      onProgress?.("Using local bank...");
+      onProgress?.("⚡ Loading from local bank...");
       addQs(getSmartPool(subject, chapter || null, count));
     }
 
-    return result.slice(0, count);
+    // Final strict filter — remove any question from wrong subject/chapter
+    const strict = result.filter(q => {
+      if (q.subject && q.subject !== subject) return false;
+      if (chapter) {
+        const qch = (q.ch || "").toLowerCase();
+        const sch = chapter.toLowerCase();
+        if (!qch.includes(sch) && !sch.includes(qch)) return false;
+      }
+      return true;
+    });
+
+    return strict.slice(0, count);
   }
 
 
@@ -1294,8 +1308,6 @@ export default function NEETTutor() {
           </div>
         </div>
 
-        )}
-
         {profile.name && (
           <div style={{ background:"var(--card)", border:"1px solid var(--border)", borderRadius:"var(--radius-lg)", padding:"16px 20px", marginBottom:"20px", display:"flex", alignItems:"center", gap:"14px", boxShadow:"var(--shadow)" }}>
             <div style={{ width:"42px", height:"42px", borderRadius:"50%", background:"var(--blue)", display:"flex", alignItems:"center", justifyContent:"center", color:"white", fontWeight:"700", fontSize:"15px", flexShrink:0, overflow:"hidden" }}>
@@ -1317,11 +1329,27 @@ export default function NEETTutor() {
           </div>
         )}
 
-        <div className="stats-grid">
-          <div className="stat-card"><div className="stat-num">27</div><div className="stat-lbl">Years of PYQs (1999–2025)</div></div>
-          <div className="stat-card"><div className="stat-num">45+45+90</div><div className="stat-lbl">Physics · Chem · Bio</div></div>
-          <div className="stat-card"><div className="stat-num">+4/−1</div><div className="stat-lbl">NEET Marking Scheme</div></div>
-        </div>
+        {(() => {
+          const neetDate = new Date("2025-05-04");
+          const today = new Date();
+          const days = Math.max(0, Math.ceil((neetDate - today) / (1000*60*60*24)));
+          const neetDate2026 = new Date("2026-05-03");
+          const days2026 = Math.max(0, Math.ceil((neetDate2026 - today) / (1000*60*60*24)));
+          const daysLeft = today > neetDate ? days2026 : days;
+          const targetYear = today > neetDate ? 2026 : 2025;
+          return (
+            <div className="stats-grid">
+              <div className="stat-card">
+                <div className="stat-num" style={{color:"var(--red)", fontSize: daysLeft < 30 ? "28px" : "24px"}}>
+                  {daysLeft}
+                </div>
+                <div className="stat-lbl">Days left for NEET {targetYear}</div>
+              </div>
+              <div className="stat-card"><div className="stat-num">45+45+90</div><div className="stat-lbl">Physics · Chemistry · Biology</div></div>
+              <div className="stat-card"><div className="stat-num">27</div><div className="stat-lbl">Years of PYQs (1999–2025)</div></div>
+            </div>
+          );
+        })()}
 
         <div className="section-head">Choose Test Mode</div>
         <div className="mode-grid">
