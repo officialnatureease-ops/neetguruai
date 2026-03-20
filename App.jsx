@@ -2087,3 +2087,111 @@ export default function NEETTutor() {
       </div>
     );
   }
+
+  if (screen === "results") {
+    const r = computeRes(questions, answers);
+    return (
+      <div className="app">
+        <header className="hdr">
+          <div className="logo">NEET<span>Guru</span></div>
+          <nav className="nav-links">
+            <button className="nav-btn" onClick={goHome}>Home</button>
+            <button className="nav-btn" onClick={() => { setEditProfile({ ...profile }); setScreen("profile"); }}>Profile</button>
+          </nav>
+        </header>
+        <div className="page">
+          <div className="score-banner">
+            <div style={{ fontSize:"13px", color:"var(--text3)", marginBottom:"4px", textTransform:"uppercase", letterSpacing:"1px" }}>Your Score</div>
+            <div className="score-big" style={{ color: r.gradeColor }}>{r.score}<span style={{ fontSize:"24px", color:"var(--text3)", fontWeight:"400" }}>/{r.maxScore}</span></div>
+            <div className="score-pct">NEET Marking Scheme (+4/−1) · {r.pct}% accuracy</div>
+            <div className="grade-pill" style={{ background: r.gradeColor + "18", border:`1px solid ${r.gradeColor}40`, color: r.gradeColor }}>{r.grade}</div>
+            <div className="score-grade-bar" style={{ background: r.gradeColor, opacity:.25 }} />
+          </div>
+
+          <div className="res-stats">
+            <div className="res-stat"><div className="res-stat-num" style={{ color:"var(--green)" }}>{r.correct}</div><div className="res-stat-lbl">Correct</div></div>
+            <div className="res-stat"><div className="res-stat-num" style={{ color:"var(--red)" }}>{r.wrong}</div><div className="res-stat-lbl">Wrong</div></div>
+            <div className="res-stat"><div className="res-stat-num" style={{ color:"var(--text3)" }}>{r.skipped}</div><div className="res-stat-lbl">Skipped</div></div>
+            <div className="res-stat"><div className="res-stat-num" style={{ color:"var(--gold)" }}>{r.pct}%</div><div className="res-stat-lbl">Accuracy</div></div>
+          </div>
+
+          <div className="ana-grid">
+            <div className="ana-card">
+              <div className="ana-title">Topic-wise Performance</div>
+              {r.ta.length === 0
+                ? <div className="text-sm text-muted">No data available</div>
+                : r.ta.map(t => (
+                  <div key={t.name} className="topic-bar">
+                    <div className="tb-header">
+                      <span className="tb-name">{t.name}</span>
+                      <span className="tb-score" style={{ color: t.pct >= 70 ? "var(--green)" : t.pct >= 50 ? "var(--gold)" : "var(--red)" }}>{t.pct}%</span>
+                    </div>
+                    <div className="tb-track">
+                      <div className="tb-fill" style={{ width:`${t.pct}%`, background: t.pct >= 70 ? "var(--green)" : t.pct >= 50 ? "var(--gold)" : "var(--red)" }} />
+                    </div>
+                  </div>
+                ))}
+            </div>
+            <div style={{ display:"flex", flexDirection:"column", gap:"14px" }}>
+              <div className="ana-card">
+                <div className="ana-title">🔴 Weak Areas — Revise These</div>
+                {r.weak.length === 0
+                  ? <div className="text-sm text-muted">No weak areas identified. Excellent work! 🎉</div>
+                  : r.weak.map(t => <div key={t.name} className="topic-pill tp-weak"><span>{t.name}</span><strong>{t.pct}%</strong></div>)}
+              </div>
+              <div className="ana-card">
+                <div className="ana-title">🟢 Strong Areas — Keep It Up</div>
+                {r.strong.length === 0
+                  ? <div className="text-sm text-muted">Answer more questions to see your strengths.</div>
+                  : r.strong.map(t => <div key={t.name} className="topic-pill tp-strong"><span>{t.name}</span><strong>{t.pct}%</strong></div>)}
+              </div>
+            </div>
+          </div>
+
+          <div className="review-card">
+            <div className="ana-title">Full Question Review</div>
+            {questions.map((q, i) => {
+              const ua = answers[i];
+              const ok = ua === q.ans, skip = ua === undefined;
+              return (
+                <div key={i} className="rev-item">
+                  <div className="rev-meta">
+                    <span className="text-xs text-muted">Q{i + 1}</span>
+                    <span className={`tag ${ok ? "tag-green" : skip ? "tag-gray" : "tag-red"}`} style={{ fontSize:"10px" }}>
+                      {ok ? "✓ Correct" : skip ? "Skipped" : "✗ Wrong"}
+                    </span>
+                    <span className="text-xs text-muted">{q.src}</span>
+                    <span className={`diff-tag d-${q.diff}`} style={{ fontSize:"10px" }}>{q.diff}</span>
+                  </div>
+                  {q.type === "figure" && <div style={{fontSize:"12px",color:"#795548",background:"#FFF8E1",borderRadius:"6px",padding:"4px 8px",marginBottom:"6px",display:"inline-block"}}>📊 Diagram-based</div>}
+                  {q.type === "match"  && <div style={{fontSize:"12px",color:"#2E7D32",background:"#E8F5E9",borderRadius:"6px",padding:"4px 8px",marginBottom:"6px",display:"inline-block"}}>🔗 Match the Column</div>}
+                  {q.type === "reaction" && <div style={{fontSize:"12px",color:"#1565C0",background:"#E3F2FD",borderRadius:"6px",padding:"4px 8px",marginBottom:"6px",display:"inline-block"}}>⚗️ Reaction Sequence</div>}
+                  <div className="rev-q" style={{whiteSpace:"pre-wrap",lineHeight:"1.65"}}>{q.q}</div>
+                  <div className="rev-opts">
+                    {(q.opts || []).map((opt, j) => (
+                      <span key={j} className={`ro ${j === q.ans ? "ro-ok" : j === ua && ua !== q.ans ? "ro-bad" : "ro-neu"}`} style={{whiteSpace:"pre-wrap"}}>
+                        {LBL[j]}: {opt}
+                      </span>
+                    ))}
+                  </div>
+                  {!ok && (
+                    <div className="rev-exp">
+                      💡 {q.exp || (q.type === "figure" ? "Refer to NCERT textbook for the diagram." : q.type === "match" ? `Correct match: Option ${["A","B","C","D"][q.ans]}` : q.type === "reaction" ? `Final product: ${q.opts[q.ans]}` : `Correct answer: ${["A","B","C","D"][q.ans]}. Refer NCERT for explanation.`)}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex gap-2">
+            <button className="btn btn-primary" onClick={() => { setScreen("config"); setSubmitted(false); }}>Take Another Test</button>
+            <button className="btn btn-outline" onClick={goHome}>Back to Home</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+}
