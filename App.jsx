@@ -338,6 +338,7 @@ function QuestionBody({ q, isMobile }) {
 
 
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+function qKey(q) { return (q?.q || '').substring(0, 60).replace(/\s+/g, '_'); }
 function fmt(s) {
   const m = Math.floor(s / 60), r = s % 60;
   return `${String(m).padStart(2, "0")}:${String(r).padStart(2, "0")}`;
@@ -1242,7 +1243,67 @@ const EMPTY_PROFILE = { name:"", dob:"", mobile:"", email:"", cls:"", photo:"" }
 export default function NEETTutor() {
 
   // Responsive hook
-  const [isMobile, setIsMobile] = React.useState(
+  const [isMobile, setIsMobile] = useState(
+
+  // Gemini answer cache: { "q_key": { answer:0, explanation:"", concept:"", loading:false } }
+  const [geminiCache, setGeminiCache] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('neet_gemini_cache') || '{}'); } catch { return {}; }
+  });
+  const [geminiLoading, setGeminiLoading] = useState(false);
+
+  // Get cache key for a question
+  function qKey(q) {
+    return (q?.q || '').substring(0, 60).replace(/\s+/g, '_');
+  }
+
+  // Fetch answer from Gemini API
+  async function fetchGeminiAnswer(q) {
+    const key = qKey(q);
+    if (geminiCache[key]) return; // already cached
+
+    setGeminiLoading(true);
+    setGeminiCache(prev => ({ ...prev, [key]: { loading: true } }));
+
+    try {
+      const res = await fetch('/api/gemini', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          question: q.q,
+          options: q.opts,
+          subject: q.subject,
+          chapter: q.ch
+        })
+      });
+
+      const data = await res.json();
+
+      if (data.answer !== undefined) {
+        const entry = {
+          answer: data.answer,
+          answerLabel: data.answerLabel,
+          explanation: data.explanation,
+          concept: data.concept,
+          loading: false
+        };
+        setGeminiCache(prev => {
+          const updated = { ...prev, [key]: entry };
+          // Save to localStorage (cap at 500 entries)
+          const keys = Object.keys(updated);
+          if (keys.length > 500) delete updated[keys[0]];
+          try { localStorage.setItem('neet_gemini_cache', JSON.stringify(updated)); } catch {}
+          return updated;
+        });
+      } else {
+        setGeminiCache(prev => ({ ...prev, [key]: { loading: false, error: data.error || 'Failed' } }));
+      }
+    } catch (err) {
+      setGeminiCache(prev => ({ ...prev, [key]: { loading: false, error: err.message } }));
+    } finally {
+      setGeminiLoading(false);
+    }
+  }
+
     typeof window !== 'undefined' ? window.innerWidth < 768 : false
   );
   useEffect(() => {
@@ -1440,6 +1501,11 @@ export default function NEETTutor() {
   }
 
   function selectAns(i) {
+    // Fetch Gemini answer when user selects
+    const q = questions[current];
+    if (q && ansMode === "instant") {
+      fetchGeminiAnswer(q);
+    }
     if (submitted) return;
     setAnswers(a => ({ ...a, [current]: i }));
   }
@@ -1451,7 +1517,7 @@ export default function NEETTutor() {
     setSubmitted(true);
     setExitM(null);
     // Save to history
-    const r = computeRes(questions, answers);
+    const r = computeRes(questions, answers, geminiCache);
     const entry = {
       date: new Date().toLocaleDateString("en-IN"),
       mode: testMode,
@@ -1483,7 +1549,8 @@ export default function NEETTutor() {
       if (!tm[t]) tm[t] = { correct: 0, total: 0 };
       tm[t].total++;
       if (ans[i] === undefined) skipped++;
-      else if (ans[i] === q.ans) { correct++; tm[t].correct++; }
+      else if (ans[i] === ((gemCache?.[qKey(q)]?.answer !== undefined && !gemCache[qKey(q)].loading) 
+        ? gemCache[qKey(q)].answer : q.ans)) { correct++; tm[t].correct++; }
       else wrong++;
     });
     const score = correct * 4 - wrong;
@@ -2222,15 +2289,7 @@ export default function NEETTutor() {
                   fontWeight:600, padding:"2px 8px", borderRadius:"4px",
                   border:"1px solid #BFDBFE"
                 }}>{q?.src}</span>
-                {q?.diff && (
-                  <span style={{
-                    background: q.diff==="Easy" ? "#F0FDF4" : q.diff==="Hard" ? "#FEF2F2" : "#FFFBEB",
-                    color: q.diff==="Easy" ? "#15803D" : q.diff==="Hard" ? "#DC2626" : "#B45309",
-                    fontSize:"11px", fontWeight:600, padding:"2px 8px",
-                    borderRadius:"4px",
-                    border:`1px solid ${q.diff==="Easy"?"#BBF7D0":q.diff==="Hard"?"#FECACA":"#FDE68A"}`
-                  }}>{q.diff}</span>
-                )}
+                {/* difficulty badge removed */}
               </div>
             </div>
 
@@ -2265,11 +2324,16 @@ export default function NEETTutor() {
                     let bg = "#fff", border = "1px solid #E2E8F0",
                         color = "#1E293B", labelBg = "#F8FAFC", labelColor = "#64748B";
 
-                    if (showRes) {
-                      if (i === q.ans) {
+                    // Use Gemini answer if available, else fallback to stored answer
+                  const gData = geminiCache[qKey(q)];
+                  const correctIdx = (gData && !gData.loading && gData.answer !== undefined)
+                    ? gData.answer : q.ans;
+
+                  if (showRes) {
+                      if (i === correctIdx) {
                         bg="#F0FDF4"; border="2px solid #22C55E";
                         color="#15803D"; labelBg="#22C55E"; labelColor="#fff";
-                      } else if (i === ua && ua !== q.ans) {
+                      } else if (i === ua && ua !== correctIdx) {
                         bg="#FEF2F2"; border="2px solid #EF4444";
                         color="#B91C1C"; labelBg="#EF4444"; labelColor="#fff";
                       } else {
@@ -2306,10 +2370,10 @@ export default function NEETTutor() {
                           lineHeight:"1.7", whiteSpace:"pre-wrap", flex:1,
                           paddingTop:"2px"
                         }}>{opt}</span>
-                        {showRes && i === q.ans && (
+                        {showRes && i === correctIdx && (
                           <span style={{color:"#22C55E", fontSize:"18px", flexShrink:0}}>✓</span>
                         )}
-                        {showRes && i === ua && ua !== q.ans && (
+                        {showRes && i === ua && ua !== correctIdx && (
                           <span style={{color:"#EF4444", fontSize:"18px", flexShrink:0}}>✗</span>
                         )}
                       </div>
@@ -2318,27 +2382,74 @@ export default function NEETTutor() {
                 </div>
 
                 {/* ── EXPLANATION (instant mode) ── */}
-                {showRes && (
-                  <div style={{
-                    background:"#F8FAFC", border:"1px solid #E2E8F0",
-                    borderLeft:"4px solid #3B82F6",
-                    borderRadius:"8px", padding:"16px",
-                    marginBottom:"16px"
-                  }}>
+                {showRes && (() => {
+                  const gd = geminiCache[qKey(q)];
+                  const corrIdx = (gd && !gd.loading && gd.answer !== undefined) ? gd.answer : q.ans;
+                  return (
                     <div style={{
-                      fontSize:"13px", fontWeight:700, color:"#3B82F6",
-                      marginBottom:"8px", textTransform:"uppercase", letterSpacing:"0.5px"
-                    }}>Correct Answer: {LBL[q.ans]}</div>
-                    <div style={{fontSize:"14px", color:"#374151", lineHeight:"1.7"}}>
-                      {q.exp || (
-                        q.type==="figure" ? "📊 Refer to the diagram in your NCERT textbook for a complete explanation." :
-                        q.type==="match"  ? `🔗 Correct combination is Option ${LBL[q.ans]}.` :
-                        q.type==="reaction" ? `⚗️ The final product is: ${q.opts[q.ans]}` :
-                        `Refer to NCERT for detailed explanation. Source: ${q.src}`
+                      background:"#F8FAFC", border:"1px solid #E2E8F0",
+                      borderLeft:"4px solid #3B82F6",
+                      borderRadius:"10px", padding:"16px",
+                      marginBottom:"16px"
+                    }}>
+                      {/* Correct answer label */}
+                      <div style={{
+                        display:"flex", alignItems:"center", gap:"8px", marginBottom:"10px"
+                      }}>
+                        <span style={{
+                          background:"#22C55E", color:"#fff",
+                          fontWeight:700, fontSize:"13px",
+                          padding:"3px 10px", borderRadius:"6px"
+                        }}>✓ Correct: {LBL[corrIdx]}</span>
+                        {gd && !gd.loading && (
+                          <span style={{
+                            fontSize:"11px", color:"#2563EB",
+                            background:"#EFF6FF", padding:"2px 8px",
+                            borderRadius:"4px", border:"1px solid #BFDBFE"
+                          }}>AI Verified ✦</span>
+                        )}
+                        {gd?.loading && (
+                          <span style={{fontSize:"12px", color:"#64748B"}}>
+                            ⏳ Verifying with AI...
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Concept tag */}
+                      {gd?.concept && (
+                        <div style={{
+                          fontSize:"12px", color:"#6B21A8",
+                          background:"#FDF4FF", border:"1px solid #E9D5FF",
+                          borderRadius:"6px", padding:"4px 10px",
+                          marginBottom:"8px", fontWeight:600,
+                          display:"inline-block"
+                        }}>📌 {gd.concept}</div>
                       )}
+
+                      {/* Explanation */}
+                      <div style={{fontSize:"14px", color:"#374151", lineHeight:"1.75"}}>
+                        {gd?.loading ? (
+                          <span style={{color:"#94A3B8"}}>Loading explanation...</span>
+                        ) : gd?.error ? (
+                          <span style={{color:"#64748B"}}>
+                            {q.exp || "Refer to NCERT for detailed explanation."}
+                            <span style={{fontSize:"11px", color:"#EF4444", marginLeft:"8px"}}>
+                              (AI unavailable: {gd.error})
+                            </span>
+                          </span>
+                        ) : gd?.explanation ? (
+                          gd.explanation
+                        ) : (
+                          q.exp || (
+                            q.type==="figure" ? "📊 Refer to the diagram in NCERT textbook." :
+                            q.type==="match"  ? `Correct combination: Option ${LBL[corrIdx]}.` :
+                            `Refer to NCERT for detailed explanation. Source: ${q.src}`
+                          )
+                        )}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  );
+                })()}
                 {ansMode === "end" && isAns && (
                   <div style={{
                     background:"#F0FDF4", border:"1px solid #BBF7D0",
@@ -2631,7 +2742,7 @@ export default function NEETTutor() {
                       {ok ? "✓ Correct" : skip ? "Skipped" : "✗ Wrong"}
                     </span>
                     <span className="text-xs text-muted">{q.src}</span>
-                    <span className={`diff-tag d-${q.diff}`} style={{ fontSize:"10px" }}>{q.diff}</span>
+                    
                   </div>
                   {q.type === "figure" && <div style={{fontSize:"12px",color:"#795548",background:"#FFF8E1",borderRadius:"6px",padding:"4px 8px",marginBottom:"6px",display:"inline-block"}}>📊 Diagram-based</div>}
                   {q.type === "match"  && <div style={{fontSize:"12px",color:"#2E7D32",background:"#E8F5E9",borderRadius:"6px",padding:"4px 8px",marginBottom:"6px",display:"inline-block"}}>🔗 Match the Column</div>}
